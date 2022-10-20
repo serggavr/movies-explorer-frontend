@@ -1,0 +1,120 @@
+@media (min-width: 769px) {
+  .techs {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+}
+
+.techs__text-block {
+  margin: 90px auto 100px;
+}
+
+.techs__text-block-title {
+  margin: 0 0 26px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+}
+
+.techs__text-block-text {
+  margin: 0 auto;
+  max-width: 460px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+}
+
+.techs__technology-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 90px);
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+}
+
+.techs__list-item {
+  min-width: 90px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #303030;
+  border-radius: 10px;
+}
+
+.techs__list-item-name {
+  padding-bottom: 4px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .techs__text-block {
+    margin: 80px auto 83px;
+  }
+
+  .techs__text-block-title {
+    margin-bottom: 22px;
+  }
+
+  .techs__text-block-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .techs__list-item {
+    min-width: 84px;
+    max-height: 57px;
+  }
+
+  .techs__list-item-name {
+    padding-bottom: 0px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .techs__technology-list {
+    grid-template-columns: repeat(auto-fit, 84px);
+  }
+}
+
+@media (max-width: 535px) {
+  .techs__text-block {
+    margin: 60px auto 50px;
+  }
+
+  .techs__text-block-title {
+    margin-bottom: 24px;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .techs__text-block-text {
+    max-width: 292px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .techs__technology-list {
+    grid-template-columns: repeat(2, 84px);
+  }
+}

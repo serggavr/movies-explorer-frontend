@@ -1,0 +1,6 @@
+@import url("./vendor/normalize.css");
+@import url("./vendor/fonts.css");
+
+.body {
+  background-color: #303030;
+}

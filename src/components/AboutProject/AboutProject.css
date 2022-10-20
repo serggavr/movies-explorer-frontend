@@ -1,0 +1,158 @@
+@media (min-width: 768px) {
+  .about {
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+}
+
+.about__description {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 40px;
+}
+
+.about__text-block {
+  max-width: 550px;
+}
+
+.about__text-block-title {
+  margin: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+}
+
+.about__text-block-text {
+  margin: 26px 0 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
+}
+
+.about__timescale {
+  margin-top: 110px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.about__time-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.about__time-block_placed_frontend {
+  max-width: 228px;
+}
+
+.about__date-wrapper {
+  height: 36px;
+  background-color: #303030;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about__date-wrapper_placed_frontend  {
+  background-color: #3DDC84;
+}
+
+.about__date {
+  margin: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  
+}
+
+.about__date_placed_frontend {
+  color: #000000;
+}
+
+.about__timescale-caption {
+  margin-top: 14px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #8B8B8B;
+}
+
+@media (max-width: 768px) {
+  
+  .about__description {
+    column-gap: 34px
+  }
+
+  .about__text-block-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about__text-block-text {
+    margin-top: 22px;
+  }
+
+  .about__timescale {
+    margin-top: 93px;
+  }
+
+  .about__time-block_placed_frontend {
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 535px) {
+  .about__description {
+    margin-top: 60px;
+    flex-direction: column;
+    row-gap: 56px;
+  }
+
+  .about__text-block-title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about__text-block-text {
+    margin-top: 16px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about__timescale {
+    margin-top: 60px;
+  }
+
+  .about__time-block_placed_frontend {
+    max-width: 100px;
+  }
+
+  .about__date {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about__timescale-caption {
+    margin-top: 9px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
