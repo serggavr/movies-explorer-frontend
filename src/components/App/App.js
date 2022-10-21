@@ -1,12 +1,10 @@
 // import logo from './logo.svg';
 import React from "react";
-import { Routes, Route, Navigate, useNavigate, Outlet} from "react-router-dom"
+import { Routes, Route, Navigate} from "react-router-dom"
 
 import './App.css';
 import Main from '../Main/Main';
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile'
@@ -19,8 +17,7 @@ import AuthForm from "../AuthForm/AuthForm";
 
 function App() {
 
-  // const navigate = useNavigate();
-  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false)
+const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false)
 
  const handleOpenBurgerMenu = () => {
   setIsBurgerMenuOpen(!isBurgerMenuOpen)

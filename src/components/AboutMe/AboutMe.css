@@ -1,8 +1,5 @@
-@media (min-width: 769px) {
-  .about-me {
-    padding-top: 110px;
-    padding-bottom: 106px;
-  }
+.about-me {
+  padding-bottom: 0;
 }
 
 .about-me__info {
@@ -70,62 +67,7 @@
   border-radius: 10px;
 }
 
-.about-me__portfolio-title {
-  margin: 0;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 20px;
-  color: #8B8B8B;
-}
-
-.about-me__portfolio-list {
-  margin: 50px 0 0;
-  padding: 0;
-}
-
-.about-me__portfolio-item {
-  margin: 0 0 20px;
-  padding: 0;
-  list-style: none;
-  /* background-color:#3DDC84; */
-  border-bottom: 1px solid #424242;
-}
-
-.about-me__portfolio-link-wrapper {
-  /* height: 100%; */
-  max-height: 70px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  /* align-items:center; */
-  text-decoration: none;
-}
-
-.about-me__portfolio-link {
-  margin: 0 0 19px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 50px;
-  letter-spacing: -0.04em;
-  
-  color: #FFFFFF;
-}
-
-.about-me__portfolio-item:last-of-type {
-  margin-bottom: 0;
-  border: none;
-}
-
 @media (max-width: 768px) {
-  .about-me {
-    padding-bottom: 70px;
-  }
-
   .about-me__info {
     margin-bottom: 90px;
     column-gap: 33px;
@@ -149,30 +91,19 @@
     font-size: 12px;
     line-height: 18px;
   }
-  
-  .about-me__github-link {
-  }
 
   .about-me__photo {
     max-width: 255px;
     max-height: 307px;
     width: 41%;
-    /* max-height: auto; */
     height: fit-content;
   }
-
-  .about-me__portfolio-link{
-    font-size: 28px;
-    line-height: 50px;
-  }
 }
-
 
 @media (max-width: 535px) {
   .about-me {
     padding-left: 14px;
     padding-right: 14px;
-    padding-bottom: 48px;
   }
 
   .about-me__info {
@@ -207,19 +138,5 @@
   .about-me__about-me {
     font-size: 11px;
     line-height: 16px;
-  }
-
-  .about-me__portfolio-title {
-    font-size: 14px;
-    line-height: 20px;
-  }
-
-  .about-me__portfolio-list {
-    margin: 40px 0 0;
-  }
-
-  .about-me__portfolio-link {
-    font-size: 18px;
-    line-height: 28px;
   }
 }
