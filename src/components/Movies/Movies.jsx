@@ -1,11 +1,10 @@
 import React from 'react';
 
 import Header from '../Header/Header';
-import Footer from "../Footer/Footer";
+import Footer from '../Footer/Footer';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import Preloader from '../Preloader/Preloader';
 
 const Movies = ({
   handleOpenBurgerMenu
@@ -21,7 +20,6 @@ const Movies = ({
         <MoviesCard />
         <MoviesCard saved={true} nameRU='Gimme Danger: История Игги и The Stooges'/>
       </MoviesCardList>
-      
       <Footer />
     </>
   );

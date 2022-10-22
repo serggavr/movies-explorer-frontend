@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './Register.css'
 import Input from '../Input/Input';
 import FormErrorMessage from '../FormErrorMessage/FormErrorMessage';
 

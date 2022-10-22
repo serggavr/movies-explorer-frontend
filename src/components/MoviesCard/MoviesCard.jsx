@@ -17,19 +17,18 @@ const MoviesCard = ({
 
   return (
     <li>
-      <div className="card">
-        <img src={image.url} alt={image.name} className="card__image" onClick={() => console.log(`link to ${trailerLink}`)} />
-        <div className="card__title-wrapper">
-          <h3 className="card__title">{nameRU}</h3>
+      <div className='card'>
+        <img src={image.url} alt={image.name} className='card__image' onClick={() => console.log(`link to ${trailerLink}`)} />
+        <div className='card__title-wrapper'>
+          <h3 className='card__title'>{nameRU}</h3>
           {onSavedMoviesPage ? (
             <Button className={`button button_type_like ${saved && `button_type_like-delete`}`} />
           ) : (
             <Button className={`button button_type_like ${saved && `button_type_like-active`}`} />
           )
           }
-          {/* <Button className={`button button_type_like `} /> */}
         </div>
-        <p className="card__duration">{`${Math.floor(duration / 60)}ч ${duration % 60}м`}</p>
+        <p className='card__duration'>{`${Math.floor(duration / 60)}ч ${duration % 60}м`}</p>
       </div>
     </li>
   );

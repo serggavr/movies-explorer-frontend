@@ -47,14 +47,6 @@
   .promo {
     padding: 300px 44px 70px;
   }
-
-  .promo__title {
-
-  }
-
-  .promo__image {
-
-  }
 }
 
 @media (max-width: 535px) {
@@ -71,7 +63,6 @@
     font-size: 31px;
     line-height: 39px;
   }
-
 }
 
 @media (max-width: 320px) {
@@ -79,13 +70,5 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 40px;
-  }
-
-  .promo__title {
-
-  }
-
-  .promo__image {
-
   }
 }

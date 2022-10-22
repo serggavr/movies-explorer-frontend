@@ -11,10 +11,6 @@
   margin-top: 20px;
 }
 
-/* .input_placed_auth-form:last-of-type {
-  margin-bottom: 10px;
-} */
-
 .input_placed_profile {
   flex-direction: row;
 }
@@ -52,10 +48,6 @@
 
 .input__label_placed_profile:last-of-type {
   border: none;
-}
-
-
-.input__field {
 }
 
 .input__field_placed_auth-form {

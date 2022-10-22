@@ -13,9 +13,9 @@ const BurgerMenuOpenButton = ({
       className={`burger-menu-button ${className ?? ``}`}
       onClick={handleOpenBurgerMenu}
     >
-      <span className="burger-menu-button__line"></span>
-      <span className="burger-menu-button__line"></span>
-      <span className="burger-menu-button__line"></span>
+      <span className='burger-menu-button__line'></span>
+      <span className='burger-menu-button__line'></span>
+      <span className='burger-menu-button__line'></span>
     </div>
   );
 };

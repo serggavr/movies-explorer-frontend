@@ -13,16 +13,16 @@ const MoviesCardList = ({
   return (
     <Section theme='dark' sectionName='card-list'>
       {/* <Preloader /> */}
-      <ul className="card-list__film-list">
+      <ul className='card-list__film-list'>
         {children}
       </ul>
       
         {!onSavedMoviesPage ? (
-        <div className="card-list__footer card-list__footer_with_button">
-          <Button className="button button_placed_card-list">Ещё</Button>
+        <div className='card-list__footer card-list__footer_with_button'>
+          <Button className='button button_placed_card-list'>Ещё</Button>
         </div>
         ) : (
-        <div className="card-list__footer">
+        <div className='card-list__footer'>
         </div>
         )}
       

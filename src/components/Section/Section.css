@@ -2,7 +2,6 @@
   background-color: #272727;
   padding-left: 70px;
   padding-right: 70px;
-  /* flex-grow: 1; */
 }
 
 .section_theme_dark {
@@ -13,8 +12,6 @@
   .section {
     padding: 90px 50px;
   }
-  
-  
 }
 
 @media (max-width: 535px) {

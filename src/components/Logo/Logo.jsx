@@ -8,7 +8,7 @@ const Logo = ({
   placedTo
 }) => {
   return (
-    <Link to="/" className={`logo ${placedTo && `logo_placed_${placedTo}`}`}><img src={logoImage} alt="logo" /></Link>
+    <Link to='/' className={`logo ${placedTo && `logo_placed_${placedTo}`}`}><img src={logoImage} alt='logo' /></Link>
   );
 };
 

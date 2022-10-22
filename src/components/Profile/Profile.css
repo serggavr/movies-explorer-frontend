@@ -1,6 +1,4 @@
 .profile {
-  /* display: block;
-  height: 100%; */
   display: flex;
   flex-direction: column;
   align-items:center;
@@ -85,7 +83,6 @@
 
 
 .profile__button {
-  /* display: inline-block; */
   background-color: #202020;
   font-family: 'Inter';
   font-style: normal;

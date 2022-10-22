@@ -46,7 +46,6 @@
 }
 
 .button_placed_card-list {
-  /* margin-top: 60px; */
   width: 320px;
   height: 36px;
   align-self: center;
@@ -65,7 +64,6 @@
 .button_placed_auth-form {
   width: 100%;
   height: 45px;
-  /* margin-top: 90px; */
   margin-top: 156px;
   background-color: #4285F4;
   border: none;
@@ -80,7 +78,6 @@
 }
 
 .button_type_like {
-  /* padding: 0; */
   margin-top: 10px;
   width: 24px;
   height: 24px;
@@ -112,7 +109,6 @@
   .button_placed_auth-container  {
     padding: 5px 12px;
     font-size: 10px;
-
   }
 
   .button_placed_search-bar {

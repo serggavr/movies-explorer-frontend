@@ -44,8 +44,6 @@
   list-style: none;
 }
 
-
-
 @media (max-width: 768px) {
   .techs__text-block {
     margin: 80px auto 83px;

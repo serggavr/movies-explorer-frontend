@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Header from '../Header/Header';
 import Footer from "../Footer/Footer";
 import Promo from '../Promo/Promo';
@@ -20,7 +21,6 @@ const Main = ({
       <AboutMe />
       <Portfolio projectsList={portfolio} />
       <Footer />
-
     </>
   );
 };
