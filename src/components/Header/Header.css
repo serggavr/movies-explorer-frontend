@@ -12,11 +12,6 @@
   background-color: #202020;
 }
 
-.header__logo {
-  width: 38px;
-  height: 38px;
-}
-
 .header__auth-container {
   display: flex;
   flex-direction: row;
@@ -98,6 +93,15 @@
   font-size: 13px;
   line-height: 18px;
 }
+
+.header__link {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.header__link:hover {
+  opacity: 0.6;
+}
+
 
 @media (max-width: 768px) {
   .header {

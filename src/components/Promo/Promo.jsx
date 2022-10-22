@@ -2,7 +2,6 @@ import React from 'react';
 
 import './Promo.css'
 import promoLogo from '../../images/promo/promo-logo.svg'
-// import Section from '../Section/Section';
 
 const Promo = () => {
   return (

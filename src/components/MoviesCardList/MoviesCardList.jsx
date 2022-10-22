@@ -1,9 +1,9 @@
 import React from 'react';
 
 import './MoviesCardList.css'
-import MoviesCard from '../MoviesCard/MoviesCard';
 import Section from '../Section/Section';
 import Button from '../Button/Button';
+import Preloader from '../Preloader/Preloader';
 
 const MoviesCardList = ({
   children,
@@ -12,6 +12,7 @@ const MoviesCardList = ({
 
   return (
     <Section theme='dark' sectionName='card-list'>
+      {/* <Preloader /> */}
       <ul className="card-list__film-list">
         {children}
       </ul>

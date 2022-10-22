@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './PageWithForm.css'
-import logo from '../../images/logo/logo.svg'
+import Logo from '../Logo/Logo';
 import Section from '../Section/Section';
 
 const PageWithForm = ({
@@ -13,7 +13,7 @@ const PageWithForm = ({
   return (
     <Section theme='dark' sectionName='page-with-form'>
       <div className="page-with-form__wrapper">
-        <Link to="/" className="page-with-form__logo"><img src={logo} alt="logo" /></Link>
+        <Logo placedTo='page-with-form'/>
         <h1 className="page-with-form__greetings">{greeting}</h1>
 
         {children}

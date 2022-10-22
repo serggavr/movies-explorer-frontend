@@ -6,6 +6,7 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
+import { portfolio, techs } from '../../utils/constants';
 
 const Main = ({
   handleOpenBurgerMenu
@@ -15,9 +16,9 @@ const Main = ({
       <Header loggedIn={false} handleOpenBurgerMenu={handleOpenBurgerMenu} />
       <Promo />
       <AboutProject />
-      <Techs />
+      <Techs techsList={techs} />
       <AboutMe />
-      <Portfolio />
+      <Portfolio projectsList={portfolio} />
       <Footer />
 
     </>

@@ -1,0 +1,22 @@
+.logo {
+  width: 38px;
+  height: 38px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.logo:hover {
+  opacity: 0.6  ;
+}
+
+.logo_placed_page-with-form {
+  width: 38px;
+  height: 38px;
+  margin: 0 0 40px;
+}
+
+@media (max-width: 535px) {
+  .logo_placed_page-with-form {
+    margin-bottom: 50px;
+    align-self: center;
+  }
+}

@@ -44,26 +44,7 @@
   list-style: none;
 }
 
-.techs__list-item {
-  min-width: 90px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #303030;
-  border-radius: 10px;
-}
 
-.techs__list-item-name {
-  padding-bottom: 4px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: -0.04em;
-  color: #FFFFFF;
-}
 
 @media (max-width: 768px) {
   .techs__text-block {
@@ -77,17 +58,6 @@
   .techs__text-block-text {
     font-size: 12px;
     line-height: 18px;
-  }
-
-  .techs__list-item {
-    min-width: 84px;
-    max-height: 57px;
-  }
-
-  .techs__list-item-name {
-    padding-bottom: 0px;
-    font-size: 12px;
-    line-height: 15px;
   }
 
   .techs__technology-list {

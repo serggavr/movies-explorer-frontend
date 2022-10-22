@@ -9,18 +9,11 @@
 
 .page-with-form__wrapper {
   width: 100%;
-  /* margin: 70px 30px 70px; */
   margin: 75px 30px 70px;
   max-width: 396px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-}
-
-.page-with-form__logo {
-  width: 38px;
-  height: 38px;
-  margin: 0 0 40px;
 }
 
 .page-with-form__greetings {
@@ -48,6 +41,11 @@
   margin-left: 6px;
   text-decoration: none;
   color: #4285F4;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.page-with-form__footer-link:hover {
+  opacity: 0.6;
 }
 
 @media (max-width: 768px) {
@@ -62,11 +60,6 @@
     margin: 56px 0 28px;
     max-width: 260px;
     justify-content: flex-start;
-  }
-
-  .page-with-form__logo {
-    margin-bottom: 50px;
-    align-self: center;
   }
 
   .page-with-form__greetings {

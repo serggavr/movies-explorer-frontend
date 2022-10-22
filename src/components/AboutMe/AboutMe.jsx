@@ -5,7 +5,6 @@ import './AboutMe.css'
 import studentPhoto from '../../images/about-me/avatar.jpg'
 import Section from '../Section/Section';
 import SectionTitle from '../SectionTitle/SectionTitle';
-// import Portfolio from '../Portfolio/Portfolio';
 
 const AboutMe = () => {
   return (
@@ -21,7 +20,6 @@ const AboutMe = () => {
           </div>
           <img className='about-me__photo' src={studentPhoto} alt='student'/>
         </div>
-        {/* <Portfolio /> */}
     </Section>
   );
 };

@@ -58,11 +58,15 @@
   line-height: 16px;
   text-decoration: none;
   color: #FFFFFF;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.footer__link:hover {
+  opacity: 0.6;
 }
 
 @media (max-width: 768px) {
   .footer {
-    /* padding-top: 60px; */
     padding-left: 30px;
     padding-right: 30px;
   }

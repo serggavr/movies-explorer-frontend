@@ -5,6 +5,7 @@ import Footer from "../Footer/Footer";
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Preloader from '../Preloader/Preloader';
 
 const Movies = ({
   handleOpenBurgerMenu
@@ -19,18 +20,8 @@ const Movies = ({
         <MoviesCard saved={true} />
         <MoviesCard />
         <MoviesCard saved={true} nameRU='Gimme Danger: История Игги и The Stooges'/>
-        {/* <MoviesCard saved={true} nameRU='33 слова о дизайне'/>
-        <MoviesCard saved={true} />
-        <MoviesCard saved={true} /> */}
-        {/* <MoviesCard />
-        <MoviesCard saved={true} nameRU='Gimme Danger: История Игги и The Stooges'/>
-        <MoviesCard saved={true} nameRU='33 слова о дизайне'/>
-        <MoviesCard saved={true} />
-        <MoviesCard saved={true} />
-        <MoviesCard />
-        <MoviesCard saved={true} nameRU='Gimme Danger: История Игги и The Stooges'/>
-        <MoviesCard saved={true} nameRU='Gimme Danger: История Игги и The Stooges'/> */}
       </MoviesCardList>
+      
       <Footer />
     </>
   );
