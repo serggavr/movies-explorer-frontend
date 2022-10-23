@@ -22,7 +22,7 @@
   padding-left: 15px;
   width: 100%;
   margin-right: 10px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -30,7 +30,10 @@
   color: #8B8B8B;
   background-color: #202020;
   border: none;
-  outline: 0;
+}
+
+.search-form__input:focus-visible {
+  outline: 1px solid #8B8B8B;
 }
 
 .search-form__input::placeholder{

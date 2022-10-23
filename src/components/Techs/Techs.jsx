@@ -9,8 +9,8 @@ const Techs = ({
   techsList
 }) => {
   return (
-    <Section sectionName='techs'>
-      <SectionTitle title='Технологии' />
+    <Section sectionName='techs' >
+      <SectionTitle title='Технологии' className='section__title_placed_techs'/>
         <div className='techs__text-block'>
           <h3 className='techs__text-block-title'>7 технологий</h3>
           <p className='techs__text-block-text'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>

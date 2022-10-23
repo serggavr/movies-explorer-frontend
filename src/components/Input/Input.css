@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+/* .input:focus-visible {
+  outline: 1px solid #8B8B8B;
+} */
+
 .input_placed_auth-form {
   flex-direction: column;
 }
@@ -21,7 +25,7 @@
 
 .input__label_placed_auth-form  {
   align-self: flex-start;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -37,7 +41,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
@@ -55,7 +59,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 15px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -67,6 +71,14 @@
   outline: 0;
 }
 
+.input__field_placed_auth-form:focus-visible {
+  outline: 1px solid #8B8B8B;
+}
+
+.input__field_placed_auth-form:focus-visible.input__field_type_error {
+  outline: 1px solid #EE3465;
+}
+
 .input__field_placed_profile {
   box-sizing: border-box;
   width: calc(100% - 44px);
@@ -76,8 +88,16 @@
   outline: 0;
 }
 
+.input__field_placed_profile:focus-visible { 
+  outline: 1px solid #8B8B8B;
+}
+
+.input__field_placed_profile:focus-visible.input__field_type_error { 
+  outline: 1px solid #EE3465;
+}
+
 .input__field_placed_profile::placeholder {
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 11px;

@@ -14,7 +14,7 @@ const AuthForm = ({
         {children}
 
       </div>
-      <Button className='button button_placed_auth-form'>{SubmitButtonText}</Button>
+      <Button className='button button_placed_auth-form' type='submit'>{SubmitButtonText}</Button>
     </form>
   );
 };

@@ -17,7 +17,7 @@
   flex-direction: row;
   align-items: center;
   column-gap: 30px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -29,7 +29,7 @@
   flex-direction: row;
   align-items: center;
   column-gap: 13px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -87,7 +87,7 @@
 .header__nav-item {
   text-decoration: none;
   color: #FFFFFF;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -108,7 +108,7 @@
   }
 
   .header__profile-container {
-    font-family: 'Inter';
+    font-family: "Inter", Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -124,7 +124,7 @@
   }
 
   .header__nav-item {
-    font-family: 'Inter';
+    font-family: "Inter", Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;

@@ -10,7 +10,7 @@ const SearchForm = () => {
     <Section theme='dark' sectionName='search-form' >
       <form className='search-form__search-bar-wrapper'>
         <div className='search-form__search-bar'>
-          <input type='text' className='search-form__input' placeholder='Фильм' />
+          <input type='text' className='search-form__input' placeholder='Фильм' required={true}/>
           <Button type='submit' className='button button button_placed_search-bar'>Поиск</Button>
         </div>
         <FilterCheckbox checked={false}/>

@@ -14,7 +14,7 @@
 
 .profile__greetings {
   margin: 0 0 107px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -48,9 +48,8 @@
   outline: 0;
 }
 
-
 .profile__input::placeholder {
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
@@ -68,7 +67,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
@@ -84,7 +83,7 @@
 
 .profile__button {
   background-color: #202020;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -102,7 +101,7 @@
 }
 
 .profile__error {
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 10px;

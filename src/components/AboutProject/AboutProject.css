@@ -18,7 +18,7 @@
 
 .about__text-block-title {
   margin: 0;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -29,7 +29,7 @@
 
 .about__text-block-text {
   margin: 26px 0 0;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -70,7 +70,7 @@
 
 .about__date {
   margin: 0;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -86,7 +86,7 @@
 
 .about__timescale-caption {
   margin-top: 14px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -112,6 +112,10 @@
 
   .about__timescale {
     margin-top: 93px;
+  }
+
+  .about__timescale-caption {
+    font-family: "SuisseIntl", Arial, sans-serif;
   }
 
   .about__time-block_placed_frontend {

@@ -13,7 +13,7 @@
   background-color: #3DDC84;
   color: #000000;
   border-radius: 3px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -36,7 +36,7 @@
   background: #4285F4;
   border: none;
   border-radius: 5px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -52,7 +52,7 @@
   background-color: #2F2F2F;
   border: none;
   border-radius: 6px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -68,7 +68,7 @@
   background-color: #4285F4;
   border: none;
   border-radius: 3px;
-  font-family: 'Inter';
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;

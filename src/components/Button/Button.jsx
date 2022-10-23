@@ -3,10 +3,11 @@ import './Button.css'
 
 const Button = ({
   children,
-  className
+  className,
+  type = 'button'
 }) => {
   return (
-    <button className={className}>
+    <button className={className} type={type}>
       {children}
     </button>
   );

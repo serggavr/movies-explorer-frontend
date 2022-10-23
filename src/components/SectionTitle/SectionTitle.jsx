@@ -3,10 +3,11 @@ import React from 'react';
 import './SectionTitle.css'
 
 const SectionTitle = ({
-  title
+  title,
+  className = ''
 }) => {
   return (
-    <h2 className='section__title'>{title}</h2>
+    <h2 className={`section__title ${className}`}>{title}</h2>
   );
 };
 

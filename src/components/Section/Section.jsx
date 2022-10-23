@@ -8,7 +8,7 @@ const Section = ({
   sectionName
 }) => {
   return (
-    <section className={`section ${theme && `section_theme_${theme}`} ${sectionName && `${sectionName}`}`}>
+    <section className={`section ${theme ? `section_theme_${theme}` : ``} ${sectionName && `${sectionName}`}`}>
       {children}
     </section>
   );

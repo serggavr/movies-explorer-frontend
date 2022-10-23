@@ -6,18 +6,13 @@ import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import BurgerMenuButton from '../BurgerMenuButton/BurgerMenuButton';
 
-// import Button from '../Button/Button';
-
 const Header = ({
   loggedIn,
   handleOpenBurgerMenu,
   theme
 }) => {
-
-  // const paths = ['movies', 'saved-movies']
-
   return (
-    <header className={`header ${theme && `header_theme_${theme}`}`}>
+    <header className={ `header ${theme ? `header_theme_${theme}` : `` }`}>
       <Logo />
 
       {loggedIn ? (
