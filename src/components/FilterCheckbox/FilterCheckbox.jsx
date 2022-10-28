@@ -2,14 +2,25 @@ import React from 'react';
 
 import './FilterCheckbox.css'
 
-const FilterCheckbox = () => {
+const FilterCheckbox = ({
+  shortMovieCheckboxChecked,
+  onMovieCheckboxChange,
+  isLoading
+}) => {
+
   return (
     <div className='filter-checkbox'>
-      <label className='filter-checkbox__switcher'>
-        <input type='checkbox' className='filter-checkbox__toggle' />
-        <span className='filter-checkbox__toggle-slider'></span>
+      <label className={`filter-checkbox__switcher ${isLoading ? `filter-checkbox__switcher_disabled` : ''}`} >
+        <input 
+          type='checkbox' 
+          className='filter-checkbox__toggle'
+          defaultChecked={shortMovieCheckboxChecked}
+          onChange={() => onMovieCheckboxChange(!shortMovieCheckboxChecked)}
+          disabled={isLoading}
+        />
+        <span className={`filter-checkbox__toggle-slider ${isLoading ? `filter-checkbox__toggle-slider_disabled` : ''}`}></span>
       </label>
-      <label className='filter-checkbox__switcher-label' htmlFor='filter-checkbox__toggle'>Короткометражки</label>
+      <label className={`filter-checkbox__switcher-label ${isLoading ? `filter-checkbox__switcher-label_disabled` : ''}`} htmlFor='filter-checkbox__toggle'>Короткометражки</label>
     </div>
   );
 };

@@ -1,3 +1,7 @@
+export const moviesApiUrl = 'https://api.nomoreparties.co/beatfilm-movies'
+export const moviesUrl ='https://api.nomoreparties.co/'
+export const mainApiUrl = 'https://nomore.nomoredomains.icu/api/ '
+
 export const portfolio = [
   {
     title: "Статичный сайт",

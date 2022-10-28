@@ -32,6 +32,11 @@
   border: none;
 }
 
+.search-form__input:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
 .search-form__input:focus-visible {
   outline: 1px solid #8B8B8B;
 }

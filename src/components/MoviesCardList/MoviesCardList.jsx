@@ -7,7 +7,9 @@ import Preloader from '../Preloader/Preloader';
 
 const MoviesCardList = ({
   children,
-  onSavedMoviesPage
+  // onSavedMoviesPage,
+  onLoadMoreButtonClick,
+  loadMoreButtonVisible
 }) => {
 
   return (
@@ -15,11 +17,15 @@ const MoviesCardList = ({
       {/* <Preloader /> */}
       <ul className='card-list__film-list'>
         {children}
+        {/* <Preloader /> */}
       </ul>
-      
-        {!onSavedMoviesPage ? (
+        {loadMoreButtonVisible ? (
+        /* {!onSavedMoviesPage ? ( */
         <div className='card-list__footer card-list__footer_with_button'>
-          <Button className='button button_placed_card-list'>Ещё</Button>
+          <Button 
+            className='button button_placed_card-list' 
+            onClick={onLoadMoreButtonClick}
+          >Ещё</Button>
         </div>
         ) : (
         <div className='card-list__footer'>

@@ -8,6 +8,15 @@
   opacity: 0.6;
 }
 
+.button:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+/* .button_hidden {
+  visibility: hidden;
+} */
+
 .button_placed_auth-container {
   padding: 8px 20px;
   background-color: #3DDC84;

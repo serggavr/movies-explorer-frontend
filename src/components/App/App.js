@@ -14,6 +14,8 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu'
 import PageWithForm from '../PageWithForm/PageWithForm';
 import AuthForm from '../AuthForm/AuthForm';
 
+import moviesApi from '../../utils/MoviesApi';
+
 function App() {
 
 const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false)

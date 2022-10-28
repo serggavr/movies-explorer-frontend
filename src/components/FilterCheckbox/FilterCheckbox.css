@@ -4,6 +4,8 @@
   align-items:center;
 }
 
+
+
 .filter-checkbox__switcher-label {
   margin-left: 14px;
   font-family: "Inter", Arial, sans-serif;
@@ -14,11 +16,19 @@
   color: #FFFFFF;
 }
 
+.filter-checkbox__switcher-label_disabled {
+  opacity: 0.2;
+}
+
 .filter-checkbox__switcher {
   position: relative;
   display: inline-block;
   width: 36px;
   height: 20px;
+}
+
+.filter-checkbox__switcher_disabled {
+  opacity: 0.2;
 }
 
 .filter-checkbox__switcher input {
@@ -38,6 +48,11 @@
   transition: .4s;
   border-radius: 34px;
   transition: opacity 0.5s ease-in-out;
+}
+
+.filter-checkbox__toggle-slider_disabled {
+  opacity: 0.2;
+  cursor: default;
 }
 
 .filter-checkbox__toggle-slider:hover {

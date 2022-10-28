@@ -12,6 +12,7 @@ import { portfolio, techs } from '../../utils/constants';
 const Main = ({
   handleOpenBurgerMenu
 }) => {
+
   return (
     <>
       <Header loggedIn={false} handleOpenBurgerMenu={handleOpenBurgerMenu} />

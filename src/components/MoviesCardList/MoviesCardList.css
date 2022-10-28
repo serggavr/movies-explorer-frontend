@@ -6,13 +6,13 @@
 .card-list__film-list {
   margin: 0;
   padding: 0;
-  min-height: 322px;
+  /* min-height: 322px; */
   list-style: none;
   display: grid;
   grid-auto-flow: row;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   row-gap: 38px;
-  column-gap: 20px;
+  column-gap: 20.1px;
 }
 
 .card-list__footer {

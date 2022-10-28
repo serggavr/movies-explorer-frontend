@@ -1,11 +1,14 @@
 .card {
+  height: 100%;
+  min-height: 230px;
   display: flex;
   flex-direction: column;
 }
 
 .card__image {
+  height: 100%;
   min-height: 151px;
-  height: fit-content;
+  object-fit: cover;
   cursor: pointer;
 }
 

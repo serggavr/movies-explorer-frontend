@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { lazy } from 'react';
 
 import './MoviesCard.css'
+import { moviesUrl } from '../../utils/constants';
 import Button from '../Button/Button';
+import Preloader from '../Preloader/Preloader';
 
 const MoviesCard = ({
   onSavedMoviesPage,
@@ -14,11 +16,21 @@ const MoviesCard = ({
   trailerLink = 'https://www.youtube.com/watch?v=UXcqcdYABFw',
   saved
 }) => {
+  const [loaded, setLoaded] = React.useState(false);
 
   return (
     <li>
       <div className='card'>
-        <img src={image.url} alt={image.name} className='card__image' onClick={() => console.log(`link to ${trailerLink}`)} />
+        {loaded ? null : ( <Preloader /> ) }
+        <img 
+          src={`${moviesUrl}${image.url}`} 
+          alt={image.name}
+          className='card__image'
+          onClick={() => console.log(`link to ${trailerLink}`)}
+
+          style={loaded ? {} : {display: 'none'}}
+          onLoad={() => setLoaded(true)}
+        />
         <div className='card__title-wrapper'>
           <h3 className='card__title'>{nameRU}</h3>
           {onSavedMoviesPage ? (
