@@ -3,6 +3,16 @@
   flex-direction: column;
 }
 
+.card-list__no-found {
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
 .card-list__film-list {
   margin: 0;
   padding: 0;

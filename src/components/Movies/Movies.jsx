@@ -21,6 +21,8 @@ const Movies = ({
   const [filteredMovies, setFilteredMovie] = useLocalStorage([], 'FilteredMovie')
   const [returnedCards, setReturnedCards] = React.useState([])
   const [loadMoreButtonVisible, setLoadMoreButtonVisible] = React.useState(false)
+  const [moviesMessageVisible, setMoviesMessageVisible] = React.useState(false)
+  const [moviesMessage, setMoviesMessage] = React.useState('Ничего не найдено')
   // const [filteredArray, setArrayForFiltering, setFilteredQueryField, setFilterQueryValue, setFilterDurationValue, setFilteredDurationField] = useMoviesFilter()
   const initialAmountCards = 12
   const amountCardsForLoad = 3
@@ -70,11 +72,18 @@ const Movies = ({
     setIsLoading(true)
     moviesApi.getMovies()
       .then((movies) => {
-        console.log('load from Api')
-        setMoviesList(movies)
-        console.log('set MoviesList')
+        // if (movies.length !==  0) {
+          console.log('load from Api')
+          setMoviesList(movies)
+          console.log('set MoviesList')
+        // } 
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        setFilterQuery('')
+        setIsLoading(false)
+        setMoviesMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+        setMoviesMessageVisible(true)
+      })
   }
 
   React.useEffect (() => {
@@ -94,9 +103,15 @@ const Movies = ({
   }, [moviesList])
 
   React.useEffect(() => {
-    if (filteredMovies.length !== 0) {
       setReturnedCards(loadingPartialCards(filteredMovies, initialAmountCards))
       console.log('set Returned Cards with partialCardLoading')
+      setMoviesMessageVisible(false)
+    if (filteredMovies.length === 0) {
+      setMoviesMessage('Ничего не найдено')
+      setMoviesMessageVisible(true)
+    }
+    if (filteredMovies.length === 0 & moviesList.length === 0) {
+      setMoviesMessageVisible(false)
     }
   }, [filteredMovies])
 
@@ -117,7 +132,7 @@ const Movies = ({
   }, [shortMovieCheckbox])
 
   React.useEffect(() => {
-    changeButtonVisible()
+    changeButtonVisible()  
   }, [returnedCards])
 
 
@@ -271,6 +286,8 @@ const Movies = ({
         <MoviesCardList 
           onLoadMoreButtonClick={onLoadMoreCards}
           loadMoreButtonVisible={loadMoreButtonVisible}
+          moviesMessageVisible={moviesMessageVisible}
+          moviesMessage={moviesMessage}
         >
           {/* {returnedArrayOfCard && returnedArrayOfCard.map((movie) => { */}
           {returnedCards.map((movie) => {

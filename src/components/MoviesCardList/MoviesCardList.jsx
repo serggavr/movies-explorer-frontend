@@ -9,12 +9,16 @@ const MoviesCardList = ({
   children,
   // onSavedMoviesPage,
   onLoadMoreButtonClick,
-  loadMoreButtonVisible
+  loadMoreButtonVisible,
+  moviesMessageVisible,
+  moviesMessage
 }) => {
 
   return (
     <Section theme='dark' sectionName='card-list'>
-      {/* <Preloader /> */}
+      {moviesMessageVisible && (
+        <p className='card-list__no-found'>{moviesMessage}</p>
+      )}
       <ul className='card-list__film-list'>
         {children}
         {/* <Preloader /> */}
