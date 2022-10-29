@@ -7,7 +7,7 @@
 
 .card__image {
   height: 100%;
-  min-height: 151px;
+  /* min-height: 151px; */
   object-fit: cover;
   cursor: pointer;
 }
@@ -42,6 +42,12 @@
   line-height: 13px;
   color: #8B8B8B;;
 }
+
+/* @media (max-width: 992px) {
+  .card{
+    max-height: 269px;
+  }
+} */
 
 @media (max-width: 768px) {
   .card__image {
