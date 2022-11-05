@@ -5,16 +5,29 @@ import Button from '../Button/Button';
 
 const AuthForm = ({
   children,
-  SubmitButtonText
+  authFormClassName,
+  submitButtonText,
+  submitButtonClassName,
+  isFormValid,
+  onSubmit
 }) => {
   return (
-    <form action='#' className='auth__form'>
+    <form 
+      action='#'
+      className={authFormClassName ? `auth__form ${authFormClassName}` : `auth__form`}
+    >
       <div className='auth__form-wrapper'>
         
         {children}
 
       </div>
-      <Button className='button button_placed_auth-form' type='submit'>{SubmitButtonText}</Button>
+      <Button 
+        className={submitButtonClassName ? `button ${submitButtonClassName}` : `button button_placed_auth-form`}
+        type='submit'
+        isDisabled={isFormValid}
+        onClick={onSubmit}
+      >{submitButtonText}
+      </Button>
     </form>
   );
 };

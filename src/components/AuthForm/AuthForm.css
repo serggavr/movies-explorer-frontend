@@ -14,12 +14,19 @@
   flex-grow: 1;
 }
 
+.auth__form_placed_profile {
+  max-height: 315px;
+}
+
 @media (max-width: 768px) {
   .auth__form {
     max-height: 377px;
   }
   .auth__form-wrapper {
     flex-grow: 0;
+  }
+  .auth__form_placed_profile {
+    max-height: 304px;
   }
 } 
 

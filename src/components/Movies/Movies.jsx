@@ -8,7 +8,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
-import moviesApi from '../../utils/MoviesApi';
+import { moviesApi } from '../../utils/MoviesApi';
 import {
   widthMax,
   widthRegular,
@@ -20,12 +20,15 @@ import {
 
 const Movies = ({
   handleOpenBurgerMenu,
+  onMovieLike
 }) => {
   const [isLoading, setIsLoading] = React.useState(true);
+
   const [shortMovieCheckbox, setShortMovieCheckbox] = useLocalStorage(false, 'ShortMovieCheckbox');
   const [filterQuery, setFilterQuery] = useLocalStorage('', 'FilterQuery');
-  const [moviesList, setMoviesList] = useLocalStorage([], 'Movie');
-  const [filteredMovies, setFilteredMovie] = useLocalStorage([], 'FilteredMovie');
+  const [moviesList, setMoviesList] = useLocalStorage([], 'MoviesList');
+  const [filteredMovies, setFilteredMovie] = useLocalStorage([], 'FilteredMovies');
+  
   const [returnedCards, setReturnedCards] = React.useState([]);
   const [loadMoreButtonVisible, setLoadMoreButtonVisible] = React.useState(false);
   const [moviesMessageVisible, setMoviesMessageVisible] = React.useState(false);
@@ -34,7 +37,7 @@ const Movies = ({
   const [initialAmountCards, setInitialAmountCards] = React.useState(12);
   const [amountCardsForLoad, setAmountCardsForLoad] = React.useState(3);
 
-  function filterCards(cardsList, filterQuery, filterCheckbox) {
+  function filterMovieCards(cardsList, filterQuery, filterCheckbox) {
     let filteredArray = [];
     let filterDuration = 40;
     if (filterQuery) {
@@ -105,6 +108,7 @@ const Movies = ({
           setMoviesList(movies);
       })
       .catch(err => {
+        console.log('error getMovie')
         setFilterQuery('');
         setIsLoading(false);
         setMoviesMessage(movieLoadErrorMessage);
@@ -122,26 +126,28 @@ const Movies = ({
 
   React.useEffect(() => {
     if (moviesList.length > 0) {
-      setFilteredMovie( filterCards(moviesList, filterQuery, shortMovieCheckbox) );
+      setFilteredMovie( filterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
       setIsLoading(false);
     }
   }, [moviesList]);
 
   React.useEffect(() => {
     if (filterQuery !== '') {
-      setFilteredMovie( filterCards(moviesList, filterQuery, shortMovieCheckbox) );
+      setFilteredMovie( filterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
     }
   }, [filterQuery]);
 
   React.useEffect(() => {
     if (filterQuery !== '') {
-      setFilteredMovie( filterCards(moviesList, filterQuery, shortMovieCheckbox) );
+      setFilteredMovie( filterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
     }
   }, [shortMovieCheckbox]);
 
   React.useEffect(() => {
       setMoviesMessageVisible(false);
-    if (filteredMovies.length === 0) {
+    if (filteredMovies.length === 0 & filterQuery !== '') {
+      // console.log(filterQuery)
+      // console.log('check filter length & filter query')
       setMoviesMessage(movieNotFoundMessage);
       setMoviesMessageVisible(true);
     }
@@ -168,7 +174,11 @@ const Movies = ({
 
   return (
     <>
-      <Header loggedIn={true} handleOpenBurgerMenu={handleOpenBurgerMenu} theme='dark' />
+      <Header 
+      // loggedIn={true}
+      handleOpenBurgerMenu={handleOpenBurgerMenu} 
+      theme='dark' 
+      />
       <SearchForm
         onFilterQueryChange={handleFilterQueryChange}
         filterQueryValue={filterQuery}
@@ -185,15 +195,17 @@ const Movies = ({
           moviesMessageVisible={moviesMessageVisible}
           moviesMessage={moviesMessage}
         >
-          {returnedCards.map((movie) => {
+          {returnedCards.map((movie, index) => {
             return (
               <MoviesCard
-                key={movie.id}
-                nameRU={movie.nameRU}
-                image={movie.image}
-                trailerLink={movie.trailerLink}
-                duration={movie.duration}
-                {...movie}
+                movie={movie}
+                onMovieLike={onMovieLike}
+                key={`${index}`}
+                // nameRU={movie.nameRU}
+                // image={movie.image}
+                // trailerLink={movie.trailerLink}
+                // duration={movie.duration}
+                // {...movie}
               />
             )
           })}

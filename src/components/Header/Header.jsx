@@ -5,17 +5,27 @@ import './Header.css';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import BurgerMenuButton from '../BurgerMenuButton/BurgerMenuButton';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const Header = ({
-  loggedIn,
+  // loggedIn,
   handleOpenBurgerMenu,
   theme
 }) => {
+  const currentUser = React.useContext(CurrentUserContext);
+  // const [loggedIn, setLoggedIn] = React.useState(false);
+
+  // React.useState(() => {
+  //   if (currentUser.email) {
+  //     setLoggedIn(true)
+  //   }
+  // }, [CurrentUserContext])
+  
   return (
     <header className={ `header ${theme ? `header_theme_${theme}` : `` }`}>
       <Logo />
 
-      {loggedIn ? (
+      {currentUser.email ? (
         <>
           <nav className='header__nav'>
             <ul className='header__nav-list'>
@@ -28,7 +38,7 @@ const Header = ({
             </ul>
           </nav>
           <div className='header__profile-container header__profile-container_type_logged-user'>
-            <Link to='/profile' className='header__link header__auth-email'>Аккаунт</Link>
+            <Link to='/profile' className='header__link header__auth-email'>{currentUser.email}</Link>
             <Link to='/profile' className='header__link header__auth-profile button button_placed_profile-container'></Link>
           </div>
           <BurgerMenuButton handleOpenBurgerMenu={handleOpenBurgerMenu} />

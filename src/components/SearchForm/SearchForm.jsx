@@ -44,7 +44,7 @@ const SearchForm = ({
           <Button 
             type='submit'
             className='button button button_placed_search-bar'
-            isLoading={isLoading}
+            isDisabled={isLoading}
           >Поиск</Button>
         </div>
         <FilterCheckbox 

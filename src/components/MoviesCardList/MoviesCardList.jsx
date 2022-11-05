@@ -16,13 +16,15 @@ const MoviesCardList = ({
 
   return (
     <Section theme='dark' sectionName='card-list'>
-      {moviesMessageVisible && (
+      {moviesMessageVisible ? (
         <p className='card-list__no-found'>{moviesMessage}</p>
-      )}
-      <ul className='card-list__film-list'>
+      ) : (
+        <ul className='card-list__film-list'>
         {children}
         {/* <Preloader /> */}
       </ul>
+      )}
+      
         {loadMoreButtonVisible ? (
         /* {!onSavedMoviesPage ? ( */
         <div className='card-list__footer card-list__footer_with_button'>

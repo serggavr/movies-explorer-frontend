@@ -5,7 +5,7 @@ const Button = ({
   children,
   className,
   type = 'button',
-  isLoading,
+  isDisabled,
   onClick,
 }) => {
 
@@ -13,7 +13,7 @@ const Button = ({
     <button 
       className={className}
       type={type}
-      disabled={isLoading}
+      disabled={isDisabled}
       onClick={onClick}
     >
       {children}

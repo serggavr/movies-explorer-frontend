@@ -46,8 +46,12 @@
 }
 
 .header__auth-email {
+  width: 140px;
   color: #FFFFFF;
   text-decoration: none;
+  text-align: end;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .header__nav_placed_burger-menu {
@@ -65,7 +69,7 @@
 }
 
 .header__nav-list {
-  margin-left: 61px;
+  margin-left: 146px;
   padding: 0;
   display: flex;
   flex-direction: row;
@@ -100,6 +104,10 @@
 
 .header__link:hover {
   opacity: 0.6;
+}
+
+.header__profile-container_placed_burger-menu .header__auth-email {
+  width: 100%;
 }
 
 @media (max-width: 768px) {

@@ -43,11 +43,14 @@
   color: #8B8B8B;;
 }
 
-/* @media (max-width: 992px) {
+@media (max-width: 631px) {
   .card{
-    max-height: 269px;
+    max-height: 245px;
   }
-} */
+  .card__image {
+    height: 100%;
+  }
+}
 
 @media (max-width: 768px) {
   .card__image {

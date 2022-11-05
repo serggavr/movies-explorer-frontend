@@ -15,7 +15,7 @@ const Main = ({
 
   return (
     <>
-      <Header loggedIn={false} handleOpenBurgerMenu={handleOpenBurgerMenu} />
+      <Header handleOpenBurgerMenu={handleOpenBurgerMenu} />
       <Promo />
       <AboutProject />
       <Techs techsList={techs} />

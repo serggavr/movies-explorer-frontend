@@ -82,6 +82,7 @@
 .input__field_placed_profile {
   box-sizing: border-box;
   width: calc(100% - 44px);
+  /* text-align: end; */
   background-color: #202020;
   border: none;
   color: #FFFFFF;
@@ -108,5 +109,10 @@
 
 .input__field_type_error {
   color: #EE3465;
+  outline: 1px solid #EE3465;
 }
+
+/* .input__field_type_error {
+  outline: 1px solid #EE3465;
+} */
 

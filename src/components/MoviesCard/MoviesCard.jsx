@@ -1,46 +1,55 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
 import './MoviesCard.css'
-import { moviesUrl } from '../../utils/constants';
+import { moviesBaseUrl } from '../../utils/constants';
 import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
 
 const MoviesCard = ({
-  onSavedMoviesPage,
-  nameRU = 'Роллинг Стоунз» в изгнании',
-  duration = 61,
-  image = {
-    url: 'https://api.nomoreparties.co/uploads/small_stones_in_exile_b2f1b8f4b7.jpeg',
-    name: 'stones-in-exile',
-  },
-  trailerLink = 'https://www.youtube.com/watch?v=UXcqcdYABFw',
-  saved
+  onMovieLike,
+  onMovieRemove,
+  movie,
+  saved = false
 }) => {
   const [loaded, setLoaded] = React.useState(false);
+
+    function handleMovieLike() {
+      onMovieLike(movie)
+    }
+
+    function handleRemoveMovie() {
+      onMovieRemove(movie)
+    }
 
   return (
     <li>
       <div className='card'>
         {loaded ? null : ( <Preloader /> ) }
         <img 
-          src={`${moviesUrl}${image.url}`} 
-          alt={image.name}
+          src={`${saved ? movie.image: `${moviesBaseUrl}${movie.image.url}`}`} 
+          alt={movie.nameRU}
           className='card__image'
-          onClick={() => console.log(`link to ${trailerLink}`)}
+          onClick={() => console.log(`link to ${movie.trailerLink}`)}
 
           style={loaded ? {} : {display: 'none'}}
           onLoad={() => setLoaded(true)}
         />
         <div className='card__title-wrapper'>
-          <h3 className='card__title'>{nameRU}</h3>
-          {onSavedMoviesPage ? (
-            <Button className={`button button_type_like ${saved && `button_type_like-delete`}`} />
+          <h3 className='card__title'>{movie.nameRU}</h3>
+          {saved ? (
+            <Button
+              onClick={handleRemoveMovie}
+              className={`button button_type_like ${saved && `button_type_like-delete`}`} 
+            />
           ) : (
-            <Button className={`button button_type_like ${saved && `button_type_like-active`}`} />
+            <Button
+              onClick={handleMovieLike}
+              className={`button button_type_like ${saved && `button_type_like-active`}`} 
+            />
           )
           }
         </div>
-        <p className='card__duration'>{`${Math.floor(duration / 60)}ч ${duration % 60}м`}</p>
+        <p className='card__duration'>{`${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`}</p>
       </div>
     </li>
   );
