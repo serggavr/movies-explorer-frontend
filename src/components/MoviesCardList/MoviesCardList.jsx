@@ -3,40 +3,37 @@ import React from 'react';
 import './MoviesCardList.css'
 import Section from '../Section/Section';
 import Button from '../Button/Button';
-import Preloader from '../Preloader/Preloader';
 
 const MoviesCardList = ({
   children,
-  // onSavedMoviesPage,
   onLoadMoreButtonClick,
-  loadMoreButtonVisible,
+  loadMoreMoviesButtonVisible,
   moviesMessageVisible,
-  moviesMessage
+  moviesMessage,
+  apiErrorMessage
 }) => {
 
   return (
     <Section theme='dark' sectionName='card-list'>
+      
       {moviesMessageVisible ? (
-        <p className='card-list__no-found'>{moviesMessage}</p>
-      ) : (
-        <ul className='card-list__film-list'>
-        {children}
-        {/* <Preloader /> */}
+          <p className='card-list__no-found'>{apiErrorMessage ? apiErrorMessage : moviesMessage}</p>
+        ) : (
+          <ul className='card-list__film-list'>
+          {children}
       </ul>
       )}
       
-        {loadMoreButtonVisible ? (
-        /* {!onSavedMoviesPage ? ( */
+      {loadMoreMoviesButtonVisible ? (
         <div className='card-list__footer card-list__footer_with_button'>
           <Button 
             className='button button_placed_card-list' 
             onClick={onLoadMoreButtonClick}
           >Ещё</Button>
         </div>
-        ) : (
-        <div className='card-list__footer'>
-        </div>
-        )}
+          ) : (
+        <div className='card-list__footer' />
+      )}
       
     </Section>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './BurgerMenuButton.css'
+import './BurgerMenuOpenButton.css'
 
 const BurgerMenuOpenButton = ({
   visible,

@@ -7,33 +7,51 @@ import Preloader from '../Preloader/Preloader';
 
 const MoviesCard = ({
   onMovieLike,
+  onMovieDislike,
   onMovieRemove,
   movie,
-  saved = false
+  saved = false,
+  liked = false,
 }) => {
   const [loaded, setLoaded] = React.useState(false);
+  const [isLiked, setIsLiked] = React.useState(liked)
 
     function handleMovieLike() {
       onMovieLike(movie)
+      .finally(() => {
+        setIsLiked(true)
+      })
     }
 
     function handleRemoveMovie() {
       onMovieRemove(movie)
     }
 
+    function handleMovieDislike() {
+      onMovieDislike(movie)
+      .finally(() => {
+        setIsLiked(false)
+      })
+    }
+
   return (
     <li>
       <div className='card'>
         {loaded ? null : ( <Preloader /> ) }
-        <img 
-          src={`${saved ? movie.image: `${moviesBaseUrl}${movie.image.url}`}`} 
-          alt={movie.nameRU}
-          className='card__image'
-          onClick={() => console.log(`link to ${movie.trailerLink}`)}
-
-          style={loaded ? {} : {display: 'none'}}
-          onLoad={() => setLoaded(true)}
-        />
+        <a 
+          href={movie.trailerLink}
+          className='card__link'
+          target='_blank'
+          rel='noreferrer'
+        >
+          <img 
+            src={`${saved ? movie.image: `${moviesBaseUrl}${movie.image.url}`}`} 
+            alt={movie.nameRU}
+            className='card__image'
+            style={loaded ? {} : {display: 'none'}}
+            onLoad={() => setLoaded(true)}
+          />
+        </a>
         <div className='card__title-wrapper'>
           <h3 className='card__title'>{movie.nameRU}</h3>
           {saved ? (
@@ -41,11 +59,18 @@ const MoviesCard = ({
               onClick={handleRemoveMovie}
               className={`button button_type_like ${saved && `button_type_like-delete`}`} 
             />
-          ) : (
-            <Button
-              onClick={handleMovieLike}
-              className={`button button_type_like ${saved && `button_type_like-active`}`} 
-            />
+          ) : ( isLiked ? (
+              <Button
+                onClick={handleMovieDislike}
+                className={`button button_type_like ${isLiked && `button_type_like-active`}`}
+              />
+            ) : (
+              <Button
+                onClick={handleMovieLike}
+                className={`button button_type_like ${isLiked && `button_type_like-active`}`}
+              />
+            )
+            
           )
           }
         </div>

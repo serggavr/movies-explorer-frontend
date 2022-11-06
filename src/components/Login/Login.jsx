@@ -51,9 +51,8 @@ const Login = ({
     apiErrorMessage ?? setApiErrorMessage('')
   }, [emailValid, passwordValid, email, password])
 
-  React.useEffect(() => {  ///Дописать обработчик ошибок
+  React.useEffect(() => {
     if (onApiError) {
-      console.log(onApiError)
       if (onApiError.message === 'Failed to fetch') {
         setApiErrorMessage('Что-то пошло не так...')
       }

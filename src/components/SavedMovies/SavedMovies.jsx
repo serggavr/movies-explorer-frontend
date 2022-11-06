@@ -5,142 +5,53 @@ import Footer from '../Footer/Footer';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { mainApi } from '../../utils/MainApi';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import Preloader from '../Preloader/Preloader';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
-
-import {
-  widthMax,
-  widthRegular,
-  widthTablet,
-  widthMobile,
-  movieNotFoundMessage,
-  movieLoadErrorMessage,
-} from '../../utils/constants';
+import { movieNotFoundMessage } from '../../utils/constants';
 
 const SavedMovies = ({
   handleOpenBurgerMenu,
-  onMovieRemove
+  onChangeWindowWidth,
+  onFilterMovieCards,
+  onLoadingPartialCards,
+  onChangeButtonVisible,
+  loadMoreMoviesButtonVisible,
+  savedMoviesList,
+  onSavedMovieRemove,
+  getSavedMoviesFromMoviesApi,
+  apiErrorMessage,
+
+  initialAmountCards,
+  amountCardsForLoad
 }) => {
   const [isLoading, setIsLoading] = React.useState(true);
-
-  const [savedMoviesList, setSavedMoviesList] = useLocalStorage([], 'SavedMoviesList');
   const [savedShortMovieCheckbox, setSavedShortMovieCheckbox] = useLocalStorage(false, 'SavedShortMovieCheckbox');
   const [savedMoviesFilterQuery, setSavedMoviesFilterQuery] = useLocalStorage('', 'SavedMoviesFilterQuery');
   const [filteredSavedMovies, setFilteredSavedMovies] = useLocalStorage([], 'SavedFilteredMovies');
-
   const [returnedCards, setReturnedCards] = React.useState([]);
-  const [loadMoreButtonVisible, setLoadMoreButtonVisible] = React.useState(false);
   const [moviesMessageVisible, setMoviesMessageVisible] = React.useState(false);
-  const [moviesMessage, setMoviesMessage] = React.useState('');
-
-  const [initialAmountCards, setInitialAmountCards] = React.useState(12);
-  const [amountCardsForLoad, setAmountCardsForLoad] = React.useState(3);
-
+  const [moviesNotFoundMessage, setMoviesNotFoundMessage] = React.useState('');
   const windowWidth = useWindowWidth();
 
-  const handleSavedMovieRemove = (movie) => {
-    onMovieRemove(movie)
-    .finally(() => {
-      const moviesList = savedMoviesList.filter((el) => el._id !== movie._id)
-      console.log(moviesList)
-      setSavedMoviesList(moviesList)
-    })
-    // console.log(movie)
+  const handleFilterQueryChange = (query) => {
+    setSavedMoviesFilterQuery(query);
+    if (!savedMoviesFilterQuery && savedMoviesList.length === 0) {
+      getSavedMoviesFromMoviesApi();
+    }
   }
 
-  function changeAmountOfCardVisible() {
-    if(windowWidth <= widthMobile.maxDisplayWidth) {
-      setInitialAmountCards(widthMobile.initialAmountCards);
-      setAmountCardsForLoad(widthMobile.amountCardsForLoad);
-    }
-    if(windowWidth <= widthTablet.maxDisplayWidth & windowWidth > widthMobile.maxDisplayWidth) {
-      setInitialAmountCards(widthTablet.initialAmountCards);
-      setAmountCardsForLoad(widthTablet.amountCardsForLoad);
-    }
-    if(windowWidth <= widthRegular.maxDisplayWidth & windowWidth > widthTablet.maxDisplayWidth) {
-      setInitialAmountCards(widthRegular.initialAmountCards);
-      setAmountCardsForLoad(widthRegular.amountCardsForLoad);
-    }
-    if(windowWidth > widthMax.maxDisplayWidth) {
-      setInitialAmountCards(widthMax.initialAmountCards);
-      setAmountCardsForLoad(widthMax.amountCardsForLoad);
-    }
-}
-
-const handleFilterQueryChange = (query) => {
-  setSavedMoviesFilterQuery(query);
-  if (!savedMoviesFilterQuery && savedMoviesList.length === 0) {
-    getSavedMoviesFromMoviesApi();
-  }
-}
-
-const handleFilterDurationChange = () => {
-  setSavedShortMovieCheckbox(!savedShortMovieCheckbox);
-}
-
-  function changeButtonVisible() {
-    if (filteredSavedMovies.length >= initialAmountCards) {
-      setLoadMoreButtonVisible(true);
-    }
-    if (filteredSavedMovies.length <= returnedCards.length) {
-      setLoadMoreButtonVisible(false);
-    }
+  const handleFilterDurationChange = () => {
+    setSavedShortMovieCheckbox(!savedShortMovieCheckbox);
   }
 
   function onLoadMoreCards() {
-    setReturnedCards( loadingPartialCards(filteredSavedMovies, returnedCards.length + amountCardsForLoad) );
-  }
-
-  function loadingPartialCards(arrayCardsForLoad, cardsMustBeLoaded) {
-    if (arrayCardsForLoad.length <= cardsMustBeLoaded) {
-      return arrayCardsForLoad;
-    } else {
-      const arrayCardsMustBeLoaded = arrayCardsForLoad.slice(0, cardsMustBeLoaded)
-      return arrayCardsMustBeLoaded;
-    }
-  }
-
-  function filterMovieCards(cardsList, filterQuery, filterCheckbox) {
-    // console.log(cardsList, filterQuery, filterCheckbox)
-    let filteredArray = [];
-    let filterDuration = 40;
-    if (filterQuery) {
-      filteredArray = cardsList.filter(item => item.nameRU.toLowerCase().includes(filterQuery.toLowerCase()));
-      if (filterCheckbox) {
-        return filteredArray.filter(item => item.duration <= filterDuration);
-      }
-    }
-    return filteredArray;
-  }
-
-  const getSavedMoviesFromMoviesApi = () => {
-    setIsLoading(true);
-    mainApi.getSavedMoviesList()
-      .then((movies) => {
-        if (movies.length > 0) {
-          setSavedMoviesList(movies);
-        } else {
-          console.log('пустой список фильмов')
-          setIsLoading(false);
-          setMoviesMessage(movieNotFoundMessage);
-          setMoviesMessageVisible(true);
-        }
-        
-      })
-      .catch(err => {
-        console.log('error get saved Movie')
-        savedMoviesFilterQuery('');
-        setIsLoading(false);
-        setMoviesMessage(movieLoadErrorMessage);
-        setMoviesMessageVisible(true);
-      })
+    setReturnedCards( onLoadingPartialCards(filteredSavedMovies, returnedCards.length + amountCardsForLoad) );
   }
 
   React.useEffect(() => {
     setMoviesMessageVisible(true);
-  }, [moviesMessage])
+  }, [moviesNotFoundMessage, apiErrorMessage])
 
   React.useEffect (() => {
     if(filteredSavedMovies.length !== 0) {
@@ -148,57 +59,52 @@ const handleFilterDurationChange = () => {
     } else {
       setIsLoading(false);
     }
-}, []);
+  }, []);
 
-React.useEffect(() => {
-  if (savedMoviesList.length > 0) {
-    setFilteredSavedMovies( filterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
-  } else {
-    setMoviesMessage(movieNotFoundMessage);
+  React.useEffect(() => {
+    if (savedMoviesList.length > 0) {
+      setFilteredSavedMovies( onFilterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
+    } else {
+      setMoviesNotFoundMessage(movieNotFoundMessage);
+      setMoviesMessageVisible(true);
+    }
+    setIsLoading(false);
+  }, [savedMoviesList]);
+
+  React.useEffect(() => {
+    if (savedMoviesFilterQuery !== '') {
+      setFilteredSavedMovies( onFilterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
+    }
+  }, [savedMoviesFilterQuery]);
+
+  React.useEffect(() => {
+    if (savedMoviesFilterQuery !== '') {
+      setFilteredSavedMovies( onFilterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
+    }
+  }, [savedShortMovieCheckbox]);
+
+  React.useEffect(() => {
+    setMoviesMessageVisible(false);
+  if (filteredSavedMovies.length === 0 & savedMoviesFilterQuery !== '') {
+    setMoviesNotFoundMessage(movieNotFoundMessage);
     setMoviesMessageVisible(true);
   }
-  setIsLoading(false)
-}, [savedMoviesList]);
+  setReturnedCards( onLoadingPartialCards(filteredSavedMovies, initialAmountCards) );
+  }, [filteredSavedMovies]);
 
-React.useEffect(() => {
-  if (savedMoviesFilterQuery !== '') {
-    setFilteredSavedMovies( filterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
-  }
-}, [savedMoviesFilterQuery]);
+  React.useEffect(() => {
+    onChangeButtonVisible(filteredSavedMovies, returnedCards, initialAmountCards);
+  }, [returnedCards]);
 
-React.useEffect(() => {
-  if (savedMoviesFilterQuery !== '') {
-    setFilteredSavedMovies( filterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
-  }
-}, [savedShortMovieCheckbox]);
+  React.useEffect(() => {
+    onChangeWindowWidth(windowWidth);
+  }, [windowWidth]);
 
-React.useEffect(() => {
-  setMoviesMessageVisible(false);
-if (filteredSavedMovies.length === 0 & savedMoviesFilterQuery !== '') {
-  setMoviesMessage(movieNotFoundMessage);
-  setMoviesMessageVisible(true);
-}
-// if (filteredSavedMovies.length === 0 & savedMoviesList.length === 0) {
-//   // setMoviesMessageVisible(false);
-// }
-setReturnedCards( loadingPartialCards(filteredSavedMovies, initialAmountCards) );
-}, [filteredSavedMovies]);
-
-React.useEffect(() => {
-  changeButtonVisible();
-}, [returnedCards]);
-
-React.useEffect(() => {
-  changeAmountOfCardVisible();
-}, [windowWidth]);
-
-React.useEffect(() => {
-  if (initialAmountCards > returnedCards.length) { /// Чтобы уже загруженные фильмы оставались на экране при смене разрешения
-    setReturnedCards( loadingPartialCards(filteredSavedMovies, initialAmountCards) );
-  }
-
-}, [initialAmountCards]);
-
+  React.useEffect(() => {
+    if (initialAmountCards > returnedCards.length) { /// Чтобы уже загруженные фильмы оставались на экране при смене разрешения
+      setReturnedCards( onLoadingPartialCards(filteredSavedMovies, initialAmountCards) );
+    }
+  }, [initialAmountCards]);
 
   return (
     <>
@@ -210,30 +116,31 @@ React.useEffect(() => {
         onMovieCheckboxChange={handleFilterDurationChange}
         shortMovieCheckboxChecked={savedShortMovieCheckbox}
       />
+
       { isLoading ? (
-        <Preloader />
-      ) : (
-        <MoviesCardList
-          onSavedMoviesPage={true}
-          onLoadMoreButtonClick={onLoadMoreCards}
-          loadMoreButtonVisible={loadMoreButtonVisible}
-          moviesMessageVisible={moviesMessageVisible}
-          moviesMessage={moviesMessage}
-        >
-          {returnedCards.map((movie, index) => {
-            // console.log(movie)
-            return (
-              <MoviesCard
-                movie={movie}
-                onMovieRemove={handleSavedMovieRemove}
-                key={`${index}`}
-                saved={true}
-              />
-            )
-          })}
-        </MoviesCardList>
+          <Preloader />
+        ) : (
+          <MoviesCardList
+            onSavedMoviesPage={true}
+            onLoadMoreButtonClick={onLoadMoreCards}
+            loadMoreMoviesButtonVisible={loadMoreMoviesButtonVisible}
+            moviesMessageVisible={moviesMessageVisible}
+            moviesMessage={moviesNotFoundMessage}
+            apiErrorMessage={apiErrorMessage}
+          >
+            {returnedCards.map((movie, index) => {
+              return (
+                <MoviesCard
+                  movie={movie}
+                  onMovieRemove={onSavedMovieRemove}
+                  key={`${movie._id}`}
+                  saved={true}
+                />
+              )
+            })}
+          </MoviesCardList>
         )
-      }    
+      }
       <Footer />
     </>
   );

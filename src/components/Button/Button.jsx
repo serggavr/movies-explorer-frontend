@@ -22,5 +22,3 @@ const Button = ({
 };
 
 export default Button;
-
-//// в КардЛист добавить стейт кнопки и выводить кнопку через стейт, удалить css hidden

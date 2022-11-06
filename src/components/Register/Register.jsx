@@ -4,7 +4,6 @@ import PageWithForm from '../PageWithForm/PageWithForm';
 import AuthForm from '../AuthForm/AuthForm';
 import Input from '../Input/Input';
 import FormErrorMessage from '../FormErrorMessage/FormErrorMessage';
-import { useDefaultInputValidation } from '../../hooks/useDefaultInputValidation';
 import { useCustomInputValidation } from '../../hooks/useCustomInputValidation';
 
 const Register = ({
@@ -62,7 +61,6 @@ const Register = ({
 
   React.useEffect(() => {
     if (onApiError) {
-      console.log(onApiError)
       if (onApiError.message === 'Failed to fetch') {
         setApiErrorMessage('Что-то пошло не так...')
       }

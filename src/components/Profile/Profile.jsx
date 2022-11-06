@@ -12,7 +12,8 @@ import { useCustomInputValidation } from '../../hooks/useCustomInputValidation';
 const Profile = ({
   handleOpenBurgerMenu,
   onChangeUserData,
-  onApiError
+  onApiError,
+  onLogout
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
   const [formValid, setFormValid] = React.useState(false)
@@ -37,9 +38,6 @@ const Profile = ({
   const handleSubmit = (e) => {
     e.preventDefault()
     setSubmitButtonText('Сохранение...')
-    if (newName === currentUser.name && newEmail === currentUser.email) {
-      console.log('тожесамое')
-    }
     onChangeUserData(newName, newEmail)
     .finally(() => {
       setSubmitButtonText('Редактировать')
@@ -48,10 +46,6 @@ const Profile = ({
       setNewEmail('')
     })
   }
-
-  // const handleFocus = (e) => {
-  //   e.target.value = e.target.placeholder
-  // }
 
   const handleFocusNewNameInput = () => {
     if (newName === '') {
@@ -75,7 +69,6 @@ const Profile = ({
 
   React.useEffect(() => {
     if (onApiError) {
-      console.log(onApiError)
       if (onApiError.message === 'Failed to fetch') {
         setApiErrorMessage('Что-то пошло не так...')
       }
@@ -158,7 +151,10 @@ const Profile = ({
           {/* <input type='submit' className='profile__button profile__button_type_edit' value={submitButtonText} /> */}
         {/* </form> */}
         </AuthForm>
-        <button className='profile__button profile__button_type_logout'>Выйти из аккаунта</button>
+        <button 
+          className='profile__button profile__button_type_logout'
+          onClick={onLogout}
+        >Выйти из аккаунта</button>
       </Section>
     </>
   );

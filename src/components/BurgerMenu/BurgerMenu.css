@@ -1,9 +1,11 @@
+/* .burger-menu {
+  visibility: hidden;
+  overflow: hidden;
+} */
+
 .burger-menu {
   visibility: hidden;
   overflow: hidden;
-}
-
-.burger-menu {
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -36,6 +38,16 @@
 .burger-menu_visible .burger-menu__wrapper {
   right: 0;
   position: fixed;
+}
+
+@media (min-width: 768px) {
+  .burger-menu {
+    visibility: hidden;
+    overflow: hidden;
+  }
+  .burger-menu_visible .burger-menu__wrapper {
+    right: -520px;
+  }
 }
 
 

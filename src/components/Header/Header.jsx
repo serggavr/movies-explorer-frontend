@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './Header.css';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
-import BurgerMenuButton from '../BurgerMenuButton/BurgerMenuButton';
+import BurgerMenuButton from '../BurgerMenuOpenButton/BurgerMenuOpenButton';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const Header = ({
@@ -20,9 +20,9 @@ const Header = ({
   //     setLoggedIn(true)
   //   }
   // }, [CurrentUserContext])
-  
+
   return (
-    <header className={ `header ${theme ? `header_theme_${theme}` : `` }`}>
+    <header className={`header ${theme ? `header_theme_${theme}` : ``}`}>
       <Logo />
 
       {currentUser.email ? (

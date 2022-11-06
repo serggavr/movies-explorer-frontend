@@ -10,85 +10,38 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
 import { moviesApi } from '../../utils/MoviesApi';
 import {
-  widthMax,
-  widthRegular,
-  widthTablet,
-  widthMobile,
   movieNotFoundMessage,
   movieLoadErrorMessage,
 } from '../../utils/constants';
 
 const Movies = ({
   handleOpenBurgerMenu,
-  onMovieLike
+  onMovieLike,
+  onMovieDislike,
+  onChangeWindowWidth,
+  onFilterMovieCards,
+  onLoadingPartialCards,
+  onChangeButtonVisible,
+  loadMoreMoviesButtonVisible,
+  savedMoviesList,
+  initialAmountCards,
+  amountCardsForLoad,
 }) => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const [shortMovieCheckbox, setShortMovieCheckbox] = useLocalStorage(false, 'ShortMovieCheckbox');
   const [filterQuery, setFilterQuery] = useLocalStorage('', 'FilterQuery');
   const [moviesList, setMoviesList] = useLocalStorage([], 'MoviesList');
-  const [filteredMovies, setFilteredMovie] = useLocalStorage([], 'FilteredMovies');
-  
+  const [filteredMovies, setFilteredMovie] = useLocalStorage([], 'FilteredMovies'); 
+
   const [returnedCards, setReturnedCards] = React.useState([]);
-  const [loadMoreButtonVisible, setLoadMoreButtonVisible] = React.useState(false);
   const [moviesMessageVisible, setMoviesMessageVisible] = React.useState(false);
   const [moviesMessage, setMoviesMessage] = React.useState(movieNotFoundMessage);
   const windowWidth = useWindowWidth();
-  const [initialAmountCards, setInitialAmountCards] = React.useState(12);
-  const [amountCardsForLoad, setAmountCardsForLoad] = React.useState(3);
-
-  function filterMovieCards(cardsList, filterQuery, filterCheckbox) {
-    let filteredArray = [];
-    let filterDuration = 40;
-    if (filterQuery) {
-      filteredArray = cardsList.filter(item => item.nameRU.toLowerCase().includes(filterQuery.toLowerCase()));
-      if (filterCheckbox) {
-        return filteredArray.filter(item => item.duration <= filterDuration);
-      }
-    }
-    return filteredArray;
-  }
-
-  function loadingPartialCards(arrayCardsForLoad, cardsMustBeLoaded) {
-    if (arrayCardsForLoad.length <= cardsMustBeLoaded) {
-      return arrayCardsForLoad;
-    } else {
-      const arrayCardsMustBeLoaded = arrayCardsForLoad.slice(0, cardsMustBeLoaded)
-      return arrayCardsMustBeLoaded;
-    }
-  }
-
-  function changeButtonVisible() {
-    if (filteredMovies.length >= initialAmountCards) {
-      setLoadMoreButtonVisible(true);
-    }
-    if (filteredMovies.length <= returnedCards.length) {
-      setLoadMoreButtonVisible(false);
-    }
-  }
 
   function onLoadMoreCards() {
-    setReturnedCards( loadingPartialCards(filteredMovies, returnedCards.length + amountCardsForLoad) );
+    setReturnedCards( onLoadingPartialCards(filteredMovies, returnedCards.length + amountCardsForLoad) );
   }
-
-  function changeAmountOfCardVisible() {
-    if(windowWidth <= widthMobile.maxDisplayWidth) {
-      setInitialAmountCards(widthMobile.initialAmountCards);
-      setAmountCardsForLoad(widthMobile.amountCardsForLoad);
-    }
-    if(windowWidth <= widthTablet.maxDisplayWidth & windowWidth > widthMobile.maxDisplayWidth) {
-      setInitialAmountCards(widthTablet.initialAmountCards);
-      setAmountCardsForLoad(widthTablet.amountCardsForLoad);
-    }
-    if(windowWidth <= widthRegular.maxDisplayWidth & windowWidth > widthTablet.maxDisplayWidth) {
-      setInitialAmountCards(widthRegular.initialAmountCards);
-      setAmountCardsForLoad(widthRegular.amountCardsForLoad);
-    }
-    if(windowWidth > widthMax.maxDisplayWidth) {
-      setInitialAmountCards(widthMax.initialAmountCards);
-      setAmountCardsForLoad(widthMax.amountCardsForLoad);
-    }
-}
 
   const handleFilterQueryChange = (query) => {
     setFilterQuery(query);
@@ -108,7 +61,6 @@ const Movies = ({
           setMoviesList(movies);
       })
       .catch(err => {
-        console.log('error getMovie')
         setFilterQuery('');
         setIsLoading(false);
         setMoviesMessage(movieLoadErrorMessage);
@@ -126,48 +78,46 @@ const Movies = ({
 
   React.useEffect(() => {
     if (moviesList.length > 0) {
-      setFilteredMovie( filterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
+      setFilteredMovie( onFilterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
       setIsLoading(false);
     }
   }, [moviesList]);
 
   React.useEffect(() => {
     if (filterQuery !== '') {
-      setFilteredMovie( filterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
+      setFilteredMovie( onFilterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
     }
   }, [filterQuery]);
 
   React.useEffect(() => {
     if (filterQuery !== '') {
-      setFilteredMovie( filterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
+      setFilteredMovie( onFilterMovieCards(moviesList, filterQuery, shortMovieCheckbox) );
     }
   }, [shortMovieCheckbox]);
 
   React.useEffect(() => {
       setMoviesMessageVisible(false);
     if (filteredMovies.length === 0 & filterQuery !== '') {
-      // console.log(filterQuery)
-      // console.log('check filter length & filter query')
       setMoviesMessage(movieNotFoundMessage);
       setMoviesMessageVisible(true);
     }
     if (filteredMovies.length === 0 & moviesList.length === 0) {
       setMoviesMessageVisible(false);
     }
-    setReturnedCards( loadingPartialCards(filteredMovies, initialAmountCards) );
+    setReturnedCards( onLoadingPartialCards(filteredMovies, initialAmountCards) );
   }, [filteredMovies]);
 
   React.useEffect(() => {
-    changeButtonVisible();
+    onChangeButtonVisible(filteredMovies, returnedCards, initialAmountCards);
   }, [returnedCards]);
 
   React.useEffect(() => {
-      changeAmountOfCardVisible();
+    onChangeWindowWidth(windowWidth);
   }, [windowWidth]);
 
   React.useEffect(() => {
     if (initialAmountCards > returnedCards.length) { /// Чтобы уже загруженные фильмы оставались на экране при смене разрешения
-      setReturnedCards( loadingPartialCards(filteredMovies, initialAmountCards) );
+      setReturnedCards( onLoadingPartialCards(filteredMovies, initialAmountCards) );
     }
 
   }, [initialAmountCards]);
@@ -175,9 +125,8 @@ const Movies = ({
   return (
     <>
       <Header 
-      // loggedIn={true}
-      handleOpenBurgerMenu={handleOpenBurgerMenu} 
-      theme='dark' 
+        handleOpenBurgerMenu={handleOpenBurgerMenu} 
+        theme='dark'
       />
       <SearchForm
         onFilterQueryChange={handleFilterQueryChange}
@@ -191,21 +140,22 @@ const Movies = ({
       ) : (
         <MoviesCardList 
           onLoadMoreButtonClick={onLoadMoreCards}
-          loadMoreButtonVisible={loadMoreButtonVisible}
+          loadMoreMoviesButtonVisible={loadMoreMoviesButtonVisible}
           moviesMessageVisible={moviesMessageVisible}
           moviesMessage={moviesMessage}
         >
           {returnedCards.map((movie, index) => {
+            let liked = false
+            if (savedMoviesList.filter(savedMovie => savedMovie.movieId === movie.id).length !== 0) {
+              liked = true
+            } 
             return (
               <MoviesCard
                 movie={movie}
                 onMovieLike={onMovieLike}
-                key={`${index}`}
-                // nameRU={movie.nameRU}
-                // image={movie.image}
-                // trailerLink={movie.trailerLink}
-                // duration={movie.duration}
-                // {...movie}
+                onMovieDislike={onMovieDislike}
+                key={`${movie.id}`}
+                liked={liked}
               />
             )
           })}

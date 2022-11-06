@@ -64,17 +64,15 @@
 }
 
 @media (max-width: 1280px) {
+  .card-list {
+    padding-top: 70px;
+    padding-bottom: 9px;
+  }
   .card-list__film-list {
     grid-template-columns: repeat(auto-fill, minmax(271px, 1fr));
   }
 }
 
-@media (min-width: 768px) {
-  .card-list {
-    padding-top: 70px;
-    padding-bottom: 9px;
-  }
-}
 @media (max-width: 768px) {
   .card-list {
     padding-left: 30px;
@@ -84,6 +82,12 @@
   .card-list__film-list {
     column-gap: 30px;
     row-gap: 30px;
+  }
+}
+
+@media (max-width: 655px) {
+  .card-list__film-list {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 

@@ -11,35 +11,61 @@ import Login from '../Login/Login'
 import Register from '../Register/Register'
 import NotFound from '../NotFound/NotFound'
 import BurgerMenu from '../BurgerMenu/BurgerMenu'
+import ErrorPopup from '../ErrorPopup/ErrorPopup';
 
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
+import {
+  widthMax,
+  widthRegular,
+  widthTablet,
+  widthMobile,
+  movieLoadErrorMessage,
+} from '../../utils/constants';
+
 function App() {
-  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false)
-  // const [apiErrorMessage, setApiErrorMessage] = React.useState('')
-  const [isApiError, setIsApiError] = React.useState('')
+  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
+  const [isErrorPopupOpen , setIsErrorPopupOpen] = React.useState(false);
+  const [apiErrorMessage, setApiErrorMessage] = React.useState('');
+  const [isApiError, setIsApiError] = React.useState('');
 
   const [isLogged, setIsLogged] = useLocalStorage(false, 'isLogged');
   const [currentUser, setCurrentUser] = useLocalStorage('', 'currentUser');
-  
-  // const [email, setEmail] = React.useState('')
-  // const [currentUser, setCurrentUser] = React.useState({})
-  // const [loggedIn, setLoggedIn] = React.useState(false)
-  const navigate = useNavigate()
+  const [savedMoviesList, setSavedMoviesList] = useLocalStorage([], 'SavedMoviesList');
 
-  //////////// Api //////////////
-  // function getDataFromApi() {
-  //   mainApi.getUser()
-  //     .then((user) => {
-  //       setCurrentUser(user)
-  //   })
-  //   .catch(err => {
-  //     setIsApiError(err)
-  //     console.log(err)
-  //   })
-  // }
+  const [loadMoreMoviesButtonVisible, setLoadMoreMoviesButtonVisible] = React.useState(false);
+
+  const [initialAmountCards, setInitialAmountCards] = React.useState(12);
+  const [amountCardsForLoad, setAmountCardsForLoad] = React.useState(3);
+
+  const navigate = useNavigate();
+
+  const apiErrorHandler = (err) => {
+    if (err.status === 400) { // CastError
+      setIsApiError('CastError');
+    }
+    if (err.status === 403) { // ForbiddenError
+      setIsApiError('ForbiddenError');
+    }
+    if (err.status === 409) { // ConflictError
+      setIsApiError('ConflictError');
+    }
+    if (err.status === 401) { // UnauthorizedError
+      setIsApiError('Нет доступа');
+    }
+    if (err.status === 500) { // ServerError
+      setIsApiError('Ошибка сервера');
+    }
+    if (err.status === 404) { // NotFoundError
+      setIsApiError('Не найдено');
+    }
+    if (!err.status) { 
+      setIsApiError('Ошибка сервера'); // Filed to Fetch
+    }
+    handleOpenErrorPopup();
+  }
 
   const handleChangeUserData = (name, email) => {
     return new Promise((resolve) => {
@@ -48,7 +74,7 @@ function App() {
         setCurrentUser(user)
       })
       .catch((err) => {
-        console.log(err)
+        apiErrorHandler(err)
       })
       .finally(() => {
         resolve()
@@ -63,7 +89,9 @@ function App() {
       setCurrentUser(data)
     })
     .catch((err) => {
-      console.log(err)
+      if (err.status !== 401) {
+        apiErrorHandler(err)
+      }
     })
   }
 
@@ -103,133 +131,227 @@ function App() {
   }
 
   function handleMovieLike(movie) {
-    console.log(movie)
-    mainApi.addMovieToSavedMovieList(movie)
-    .then(res => {
-      //     setCards((state) => state.map((c) => c._id === card._id ? res: c))
-      console.log(res)
-        })
-    // const isLiked = card.likes.some(like => like === currentUser._id);
-    // if (isLiked) {
-    //   Api.dislikeCard(card._id)
-    //   .then(res => {
-    //     setCards((state) => state.map((c) => c._id === card._id ? res: c))
-    //   })
-    //   .catch(err => console.log(err))
-    // } else {
-    //   Api.likeCard(card._id)
-    //   .then(res => {
-    //     setCards((state) => state.map((c) => c._id === card._id ? res: c))
-    //   })
-      .catch(err => console.log(err))
-    // }
+    return new Promise((resolve) => {
+      mainApi.addMovieToSavedMoviesList(movie)
+      .then(res => {
+        setSavedMoviesList([...savedMoviesList, res])
+      })
+      .catch(err => {
+        apiErrorHandler(err)
+      })
+      .finally(() => {
+        resolve()
+      })
+    })
+  }
+
+  function handleMovieDislike(movie) {
+    return new Promise((resolve) => {
+      const [dislikedSavedMovie] = savedMoviesList.filter(savedMovie => savedMovie.movieId === movie.id)
+      mainApi.deleteMovieFromSavedList(dislikedSavedMovie._id)
+      .catch(err => {
+        apiErrorHandler(err)
+      })
+      .finally(() => {
+        resolve()
+      })
+    })
   }
 
   function handleRemoveMovieFromSavedList(movie) {
     return new Promise((resolve) => {
-    console.log(movie)
-    mainApi.deleteMovieFromSavedList(movie._id)
-    .then(res => {
-      console.log(res)
+      mainApi.deleteMovieFromSavedList(movie._id)
+      .catch(err => {
+      apiErrorHandler(err)
+      })
+      .finally(() => {
+        resolve()
+      })
     })
-    .catch(err => console.log(err))
-    .finally(() => {
-      resolve()
+  }
+
+  const handleLogout = () => {
+    mainApi.logout()
+    .then((res) => {
+      setIsLogged(false)
+      setCurrentUser({})
+      localStorage.setItem('FilterQuery', JSON.stringify(''))
+      localStorage.setItem('SavedMoviesFilterQuery', JSON.stringify(''))
+      navigate('/', { push: true })
     })
-  })
+    .catch(err => {
+      apiErrorHandler(err)
+    })
   }
 
   //////////////////////////////
 
   const handleOpenBurgerMenu = () => {
-    setIsBurgerMenuOpen(!isBurgerMenuOpen)
+    setIsBurgerMenuOpen(!isBurgerMenuOpen);
   }
 
-  const closeAllPopups = () => {
-    setIsBurgerMenuOpen(false)
+  const handleOpenErrorPopup = () => {
+    setIsErrorPopupOpen(!isErrorPopupOpen);
+  }
+
+  const closeBurgerMenu = () => {
+    setIsBurgerMenuOpen(false);
+  }
+
+  const closeErrorPopup = () => {
+    setIsErrorPopupOpen(false);
   }
 
   const handleCloseWithPushEscButton = React.useCallback((event) => {
     if (event.key === 'Escape') {
-      closeAllPopups()
+      closeBurgerMenu();
+      closeErrorPopup();
     }
-  }, [])
+  }, []);
 
   const handleCloseWithClickOnOverlay = React.useCallback((event) => {
     if (event.target.className.includes('burger-menu_visible')) {
-      closeAllPopups()
+      closeBurgerMenu();
     }
-  }, [])
+    if (event.target.className.includes('error-popup_visible')) {
+      closeBurgerMenu();
+    }
+  }, []);
 
   React.useEffect(() => {
     if (isBurgerMenuOpen) {
-      document.addEventListener('keydown', handleCloseWithPushEscButton)
-      document.addEventListener('click', handleCloseWithClickOnOverlay)
+      document.addEventListener('keydown', handleCloseWithPushEscButton);
+      document.addEventListener('click', handleCloseWithClickOnOverlay);
       return () => {
-        document.removeEventListener('keydown', handleCloseWithPushEscButton)
-        document.removeEventListener('click', handleCloseWithClickOnOverlay)
+        document.removeEventListener('keydown', handleCloseWithPushEscButton);
+        document.removeEventListener('click', handleCloseWithClickOnOverlay);
       }
     }
-  }, [handleCloseWithClickOnOverlay, handleCloseWithPushEscButton, isBurgerMenuOpen])
-
-  // React.useEffect(() => {
-  //   if (isApiError) {
-  //     console.log(isApiError)
-  //     if (isApiError.message === 'Failed to fetch') {
-  //       setApiErrorMessage('Что-то пошло не так...')
-  //     }
-  //     if (isApiError.status === 409) {
-  //       setApiErrorMessage('Пользователь с таким email уже зарегистрирован')
-  //     }
-  //     if (isApiError.status && isApiError.status !== 409) {
-  //       setApiErrorMessage(isApiError.statusText)
-  //     }
-  //   }
-  // }, [isApiError])
+  }, [handleCloseWithClickOnOverlay, handleCloseWithPushEscButton, isBurgerMenuOpen]);
 
   React.useEffect(() =>{
+    setApiErrorMessage('');
       if (!isLogged) {
-        console.log('авторизация по токену')
-        handleAuthWithToken()
+        handleAuthWithToken();
       }
-  }, [])
+  }, []);
 
-  // React.useEffect(() =>{
-  //   if (!currentUser.email) {
-  //     setLoggedIn(false)
-  //     console.log('not user')
-  //   }
-  //   if (currentUser.email) {
-  //     setLoggedIn(true)
-      
-      
-  //     console.log('yes user')
-  //   }
-  // }, [currentUser])
+  function handleChangeAmountOfCardVisible(windowWidth) {
+    if(windowWidth <= widthMobile.maxDisplayWidth) {
+      setInitialAmountCards(widthMobile.initialAmountCards);
+      setAmountCardsForLoad(widthMobile.amountCardsForLoad);
+    }
+    if(windowWidth <= widthTablet.maxDisplayWidth & windowWidth > widthMobile.maxDisplayWidth) {
+      setInitialAmountCards(widthTablet.initialAmountCards);
+      setAmountCardsForLoad(widthTablet.amountCardsForLoad);
+    }
+    if(windowWidth <= widthRegular.maxDisplayWidth & windowWidth > widthTablet.maxDisplayWidth) {
+      setInitialAmountCards(widthRegular.initialAmountCards);
+      setAmountCardsForLoad(widthRegular.amountCardsForLoad);
+    }
+    if(windowWidth > widthMax.maxDisplayWidth) {
+      setInitialAmountCards(widthMax.initialAmountCards);
+      setAmountCardsForLoad(widthMax.amountCardsForLoad);
+    }
+  }
+
+  function handleFilterMovieCards(cardsList, filterQuery, filterCheckbox) {
+    let filteredArray = [];
+    let filterDuration = 40;
+    if (filterQuery) {
+      filteredArray = cardsList.filter(item => item.nameRU.toLowerCase().includes(filterQuery.toLowerCase()));
+      if (filterCheckbox) {
+        return filteredArray.filter(item => item.duration <= filterDuration);
+      }
+    }
+    return filteredArray;
+  }
+
+  function handleLoadingPartialCards(arrayCardsForLoad, cardsMustBeLoaded) {
+    if (arrayCardsForLoad.length <= cardsMustBeLoaded) {
+      return arrayCardsForLoad;
+    } else {
+      const arrayCardsMustBeLoaded = arrayCardsForLoad.slice(0, cardsMustBeLoaded)
+      return arrayCardsMustBeLoaded;
+    }
+  }
+
+  function handleChangeMoreButtonVisible(filteredMovies, returnedCards, initialAmountCards) {
+    if (filteredMovies.length >= initialAmountCards) {
+      setLoadMoreMoviesButtonVisible(true);
+    }
+    if (filteredMovies.length <= returnedCards.length) {
+      setLoadMoreMoviesButtonVisible(false);
+    }
+  }
+
+  const getSavedMoviesFromMoviesApi = () => {
+    mainApi.getSavedMoviesList()
+      .then(movies => {
+        setApiErrorMessage('')
+        setSavedMoviesList(movies)
+      })
+      .catch(err => {
+        setApiErrorMessage(movieLoadErrorMessage)
+      })
+  }
+
+  const handleSavedMovieRemove = (movie) => {
+    handleRemoveMovieFromSavedList(movie)
+    .finally(() => {
+      const moviesList = savedMoviesList.filter((el) => el._id !== movie._id)
+      setSavedMoviesList(moviesList)
+    })
+  }
+
+  React.useEffect (() => {
+      if (isLogged) {
+        getSavedMoviesFromMoviesApi();
+      }
+  }, [isLogged]);
   
   return (
-    
     <div className='app'>
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route path='/' element={
-              <Main 
-                handleOpenBurgerMenu={handleOpenBurgerMenu}
-              />
+            <Main
+              handleOpenBurgerMenu={handleOpenBurgerMenu}
+            />
           } />
           <Route path='/movies' element={
             <ProtectedRoute isLoggedIn={isLogged}>
-              <Movies 
+              <Movies
                 handleOpenBurgerMenu={handleOpenBurgerMenu}
+                onMovieDislike={handleMovieDislike}
                 onMovieLike={handleMovieLike}
+                onChangeWindowWidth={handleChangeAmountOfCardVisible}
+                onFilterMovieCards={handleFilterMovieCards}
+                onLoadingPartialCards={handleLoadingPartialCards}
+                onChangeButtonVisible={handleChangeMoreButtonVisible}
+                loadMoreMoviesButtonVisible={loadMoreMoviesButtonVisible}
+                savedMoviesList={savedMoviesList}
+                initialAmountCards={initialAmountCards}
+                amountCardsForLoad={amountCardsForLoad}
               />
             </ProtectedRoute>
           } />
           <Route path='/saved-movies' element={
             <ProtectedRoute isLoggedIn={isLogged}>
-              <SavedMovies 
+              <SavedMovies
                 handleOpenBurgerMenu={handleOpenBurgerMenu}
                 onMovieRemove={handleRemoveMovieFromSavedList}
+                onChangeWindowWidth={handleChangeAmountOfCardVisible}
+                onFilterMovieCards={handleFilterMovieCards}
+                onLoadingPartialCards={handleLoadingPartialCards}
+                onChangeButtonVisible={handleChangeMoreButtonVisible}
+                loadMoreMoviesButtonVisible={loadMoreMoviesButtonVisible}
+                getSavedMoviesFromMoviesApi={getSavedMoviesFromMoviesApi}
+                savedMoviesList={savedMoviesList}
+                apiErrorMessage={apiErrorMessage}
+                onSavedMovieRemove={handleSavedMovieRemove}
+                initialAmountCards={initialAmountCards}
+                amountCardsForLoad={amountCardsForLoad}
               />
             </ProtectedRoute>
           } />
@@ -239,6 +361,7 @@ function App() {
                 handleOpenBurgerMenu={handleOpenBurgerMenu}
                 onChangeUserData={handleChangeUserData}
                 onApiError={isApiError}
+                onLogout={handleLogout}
               />
             </ProtectedRoute>
           } />
@@ -265,6 +388,12 @@ function App() {
         <BurgerMenu 
           burgerMenuOpen={isBurgerMenuOpen}
           handleOpenBurgerMenu={handleOpenBurgerMenu}
+        />
+
+        <ErrorPopup
+          isErrorPopupOpen={isErrorPopupOpen}
+          errorMessage={isApiError}
+          handleOpenErrorPopup={handleOpenErrorPopup}
         />
 
       </CurrentUserContext.Provider>
