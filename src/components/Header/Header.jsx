@@ -8,18 +8,10 @@ import BurgerMenuButton from '../BurgerMenuOpenButton/BurgerMenuOpenButton';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const Header = ({
-  // loggedIn,
   handleOpenBurgerMenu,
   theme
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
-  // const [loggedIn, setLoggedIn] = React.useState(false);
-
-  // React.useState(() => {
-  //   if (currentUser.email) {
-  //     setLoggedIn(true)
-  //   }
-  // }, [CurrentUserContext])
 
   return (
     <header className={`header ${theme ? `header_theme_${theme}` : ``}`}>
