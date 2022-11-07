@@ -74,7 +74,8 @@ const Movies = ({
   }
 
   React.useEffect (() => {
-      if(filteredMovies.length !== 0) {
+      // if (filteredMovies.length !== 0) {
+        if (moviesList.length === 0) {
         getMoviesFromMoviesApi();
       } else {
         setIsLoading(false);
@@ -149,7 +150,7 @@ const Movies = ({
           moviesMessageVisible={moviesMessageVisible}
           moviesMessage={moviesMessage}
         >
-          {returnedCards.map((movie, index) => {
+          {returnedCards.map((movie) => {
             let liked = false
             if (savedMoviesList.filter(savedMovie => savedMovie.movieId === movie.id).length !== 0) {
               liked = true

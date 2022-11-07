@@ -133,7 +133,7 @@ const SavedMovies = ({
             moviesMessage={moviesNotFoundMessage}
             apiErrorMessage={apiErrorMessage}
           >
-            {returnedCards.map((movie, index) => {
+            {returnedCards.map((movie) => {
               return (
                 <MoviesCard
                   movie={movie}

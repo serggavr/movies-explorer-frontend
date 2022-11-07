@@ -18,7 +18,6 @@ class nomoredomainsApi {
     if (res.ok) {
       return res.json();
     }
-    // return Promise.reject(`Ошибка: ${res.status}`);
     return Promise.reject(res);
   }
 
@@ -93,7 +92,7 @@ class nomoredomainsApi {
     nameRU,
     nameEN,
   }) {
-    return fetch(`${this._baseUrl}/movies/`, {
+    return fetch(`${this._baseUrl}/movies`, {
       credentials: 'include',
       method: 'POST',
       headers: this._headers,

@@ -106,7 +106,12 @@ function App() {
         infoMessageHandler('Профиль обновлен')
       })
       .catch((err) => {
-        apiErrorMessageHandler(err)
+        if (err.status === 401) {
+          handleLogout()
+        } else {
+          apiErrorMessageHandler(err)
+        }
+        // apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
@@ -141,7 +146,12 @@ function App() {
         })
       })
       .catch((err) => {
-        apiErrorMessageHandler(err)
+        if (err.status === 401) {
+          handleLogout()
+        } else {
+          apiErrorMessageHandler(err)
+        }
+        // apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
@@ -160,7 +170,12 @@ function App() {
         navigate('/movies', { push: true })
       })
       .catch(err => {
-        apiErrorMessageHandler(err)
+        if (err.status === 401) {
+          handleLogout()
+        } else {
+          apiErrorMessageHandler(err)
+        }
+        // apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
@@ -175,7 +190,11 @@ function App() {
         setSavedMoviesList([...savedMoviesList, res])
       })
       .catch(err => {
-        apiErrorHandler(err)
+        if (err.status === 401) {
+          handleLogout()
+        } else {
+          apiErrorHandler(err)
+        }
       })
       .finally(() => {
         resolve()
@@ -188,7 +207,16 @@ function App() {
       const [dislikedSavedMovie] = savedMoviesList.filter(savedMovie => savedMovie.movieId === movie.id)
       mainApi.deleteMovieFromSavedList(dislikedSavedMovie._id)
       .catch(err => {
-        apiErrorHandler(err)
+        if (err.status === 401) {
+          handleLogout()
+        } else {
+          if (err.status === 401) {
+            handleLogout()
+          } else {
+            apiErrorHandler(err)
+          }
+          // apiErrorHandler(err)
+        }
       })
       .finally(() => {
         resolve()
@@ -200,7 +228,11 @@ function App() {
     return new Promise((resolve) => {
       mainApi.deleteMovieFromSavedList(movie._id)
       .catch(err => {
-      apiErrorHandler(err)
+        if (err.status === 401) {
+          handleLogout()
+        } else {
+          apiErrorHandler(err)
+        }
       })
       .finally(() => {
         resolve()
@@ -215,10 +247,20 @@ function App() {
       setCurrentUser({})
       localStorage.setItem('FilterQuery', JSON.stringify(''))
       localStorage.setItem('SavedMoviesFilterQuery', JSON.stringify(''))
+      localStorage.setItem('MoviesList', JSON.stringify([]))
+      localStorage.setItem('FilteredMovies', JSON.stringify([]))
+      localStorage.setItem('SavedFilteredMovies', JSON.stringify([]))
+      localStorage.setItem('SavedMoviesList', JSON.stringify([]))
+      localStorage.setItem('currentUser', JSON.stringify({}))
       navigate('/', { push: true })
     })
     .catch(err => {
-      apiErrorHandler(err)
+      if (err.status === 401) {
+        handleLogout()
+      } else {
+        apiErrorHandler(err)
+      }
+      // apiErrorHandler(err)
     })
   }
 
@@ -440,7 +482,10 @@ function App() {
             /> 
           } />
 
-          <Route path='/404' element={ <NotFound /> } />
+          <Route path='/404' element={ 
+            <NotFound
+            /> 
+          } />
           <Route path='/*' element={ <Navigate to={'/404'} /> } />
         </Routes>
 

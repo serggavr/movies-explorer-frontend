@@ -46,7 +46,7 @@ export const techs = [
 export const widthMax = {maxDisplayWidth: 1280, initialAmountCards: 16, amountCardsForLoad: 4}
 export const widthRegular = {maxDisplayWidth: 1280, initialAmountCards: 12, amountCardsForLoad: 3}
 export const widthTablet = {maxDisplayWidth: 992, initialAmountCards: 8, amountCardsForLoad: 2} // 768
-export const widthMobile = {maxDisplayWidth: 631, initialAmountCards: 5, amountCardsForLoad: 1} // 320
+export const widthMobile = {maxDisplayWidth: 631, initialAmountCards: 5, amountCardsForLoad: 2} // 320
 
 export const movieNotFoundMessage = 'Ничего не найдено';
 export const movieLoadErrorMessage = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
