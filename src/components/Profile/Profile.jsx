@@ -56,17 +56,23 @@ const Profile = ({
   const handleFocusNewNameInput = () => {
     if (newName === '') {
       setNewName(currentUser.name)
+      setNewEmail(currentUser.email)
     }
   }
 
   const handleFocusNewEmailInput = () => {
     if (newEmail === '') {
+      setNewName(currentUser.name)
       setNewEmail(currentUser.email)
     }
   }
 
   React.useEffect(() => {
     nameValid && emailValid && (newName !== '' || newEmail !== '') ? setFormValid(true) : setFormValid(false);
+
+    if (newName === currentUser.name && newEmail === currentUser.email) {
+      setFormValid(false)
+    }
   }, [nameValid, emailValid, newName, newEmail])
 
   React.useEffect(() => {
