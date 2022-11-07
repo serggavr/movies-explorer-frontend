@@ -1,8 +1,8 @@
 export const moviesApiUrl = 'https://api.nomoreparties.co/beatfilm-movies';
 
 export const moviesBaseUrl ='https://api.nomoreparties.co';
-// export const mainApiUrl = 'https://nomore.nomoredomains.icu/api';
-export const mainApiUrl = 'http://localhost:3000';
+export const mainApiUrl = 'https://nomore.nomoredomains.icu/api';
+// export const mainApiUrl = 'http://localhost:3000';
 
 export const portfolio = [
   {
