@@ -47,6 +47,7 @@ const Profile = ({
     setSubmitButtonText('Сохранение...')
     onChangeUserData(newName === '' ? currentUser.name : newName, newEmail === '' ? currentUser.email : newEmail)
     .finally(() => {
+      setApiErrorMessage('') //
       setSubmitButtonText('Редактировать')
       setNewName('')
       setNewEmail('')

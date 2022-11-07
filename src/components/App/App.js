@@ -90,7 +90,6 @@ function App() {
     if (!err.status) { 
       setIsApiMessage('Ошибка сервера'); // Filed to Fetch
     }
-    // handleOpenErrorPopup();
   }
 
   const infoMessageHandler = (message) => {
@@ -105,11 +104,8 @@ function App() {
       .then(user => {
         setCurrentUser(user)
         infoMessageHandler('Профиль обновлен')
-        // setIsApiError('')
       })
       .catch((err) => {
-        // apiErrorHandler(err)
-        // setIsApiError(err.status)
         apiErrorMessageHandler(err)
       })
       .finally(() => {
@@ -119,6 +115,7 @@ function App() {
   }
 
   const handleAuthWithToken = () => {
+    setIsApiError('')
     mainApi.authWithToken()
     .then((data) => {
       setIsLogged(true)
@@ -132,10 +129,10 @@ function App() {
   }
 
   const handleSignUp = ({name, email, password}) => {
+    setIsApiMessage('')
     return new Promise((resolve) => {
       mainApi.signUp({name, email, password})
       .then((res) => {
-        setIsApiError('')
         mainApi.signIn({email, password})
         .then((res) => {
           setIsLogged(true)
@@ -145,7 +142,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err)
-          setIsApiError(err.statusText)
+          apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
@@ -154,6 +151,7 @@ function App() {
   }
 
   const handleSignIn = ({email, password}) => {
+    setIsApiMessage('')
     return new Promise((resolve) => {
       mainApi.signIn({email, password})
       .then((res) => {
@@ -431,6 +429,7 @@ function App() {
             <Login 
             onSignIn={handleSignIn}
             onApiError={isApiError}
+            isApiErrorMessage={isApiErrorMessage}
             />
           } />
           
@@ -439,6 +438,7 @@ function App() {
             <Register
             onSignUp={handleSignUp}
             onApiError={isApiError}
+            isApiErrorMessage={isApiErrorMessage}
             /> 
           } />
 

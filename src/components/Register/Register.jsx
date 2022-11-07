@@ -8,7 +8,8 @@ import { useCustomInputValidation } from '../../hooks/useCustomInputValidation';
 
 const Register = ({
   onSignUp,
-  onApiError
+  onApiError,
+  isApiErrorMessage
 }) => {
   const [formValid, setFormValid] = React.useState(false)
   const [submitButtonText, setSubmitButtonText] = React.useState("Зарегистрироваться")
@@ -23,16 +24,25 @@ const Register = ({
   const {validationMessage: passwordErrorMessage, isValid: passwordValid, onChange: validatePassword, resetError: resetPasswordError } = useCustomInputValidation({})
 
   function changeName(e) {
+    if (apiErrorMessage) {
+      setApiErrorMessage('')
+    }
     setName(e.target.value);
     validateName(e)
   }
 
   function changeEmail(e) {
+    if (apiErrorMessage) {
+      setApiErrorMessage('')
+    }
     setEmail(e.target.value);
     validateEmail(e)
   }
   
   function changePassword(e) {
+    if (apiErrorMessage) {
+      setApiErrorMessage('')
+    }
     setPassword(e.target.value);
     validatePassword(e)
   }
@@ -46,28 +56,34 @@ const Register = ({
       password: password
     })
     .finally(() => {
-      setSubmitButtonText("Зарегистрироваться")
       setApiErrorMessage('')
+      setSubmitButtonText("Зарегистрироваться")
+      setName('')
+      setEmail('')
+      setPassword('')
     })
   }
 
   React.useEffect(() => {
-    if (apiErrorMessage) {
-      setApiErrorMessage('')
-    }
+    // if (apiErrorMessage) {
+    //   setApiErrorMessage('')
+    // }
       nameValid && name !== '' && emailValid && email !== '' && passwordValid && password !== '' ? setFormValid(false) : setFormValid(true);
-      apiErrorMessage ?? setApiErrorMessage('')
+      // apiErrorMessage ?? setApiErrorMessage('')
   }, [nameValid, emailValid, passwordValid, name, email, password])
 
+  // React.useEffect(() => {
+  //   if (onApiError) {
+  //     if (onApiError === "Conflict") {
+  //       setApiErrorMessage('Пользователь с таким email уже зарегистрирован')
+  //     } else {
+  //       setApiErrorMessage('Что-то пошло не так..')
+  //     }
+  //   }
+  // }, [onApiError])
   React.useEffect(() => {
-    if (onApiError) {
-      if (onApiError === "Conflict") {
-        setApiErrorMessage('Пользователь с таким email уже зарегистрирован')
-      } else {
-        setApiErrorMessage('Что-то пошло не так..')
-      }
-    }
-  }, [onApiError])
+    setApiErrorMessage(isApiErrorMessage)
+  }, [isApiErrorMessage])
 
   React.useEffect(() => {
     setApiErrorMessage('')
