@@ -14,6 +14,7 @@ import {
   movieLoadErrorMessage,
 } from '../../utils/constants';
 
+
 const Movies = ({
   handleOpenBurgerMenu,
   onMovieLike,
@@ -26,6 +27,7 @@ const Movies = ({
   savedMoviesList,
   initialAmountCards,
   amountCardsForLoad,
+  searchErrorHandler
 }) => {
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -47,6 +49,9 @@ const Movies = ({
     setFilterQuery(query);
     if (!filterQuery && moviesList.length === 0) {
       getMoviesFromMoviesApi();
+    } 
+    if (query === '') {
+      searchErrorHandler()
     }
   }
 

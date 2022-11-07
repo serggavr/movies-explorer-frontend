@@ -61,14 +61,10 @@ const Register = ({
 
   React.useEffect(() => {
     if (onApiError) {
-      if (onApiError.message === 'Failed to fetch') {
-        setApiErrorMessage('Что-то пошло не так...')
-      }
-      if (onApiError.status === 409) {
+      if (onApiError === "Conflict") {
         setApiErrorMessage('Пользователь с таким email уже зарегистрирован')
-      }
-      if (onApiError.status && onApiError.status !== 409) {
-        setApiErrorMessage(onApiError.statusText)
+      } else {
+        setApiErrorMessage('Что-то пошло не так..')
       }
     }
   }, [onApiError])

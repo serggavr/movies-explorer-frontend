@@ -12,7 +12,6 @@ const SearchForm = ({
   onMovieCheckboxChange,
   shortMovieCheckboxChecked,
 }) => {
-
   const [query, setQuery] = React.useState(filterQueryValue)
 
   const handleSubmit = (e) => {
@@ -20,24 +19,22 @@ const SearchForm = ({
     onFilterQueryChange(query);
   }
 
-  const handleChangeFilterQuery = (e) => {
-    setQuery(e.target.value);
-  }
+  React.useEffect(() => {
+    setQuery(filterQueryValue)
+  }, [filterQueryValue])
 
   return (
     <Section theme='dark' sectionName='search-form' >
       <form 
         className='search-form__search-bar-wrapper'
         onSubmit={handleSubmit}
-        
       >
         <div className='search-form__search-bar'>
           <input 
             type='text'
             className='search-form__input' 
             placeholder='Фильм' 
-            required={true}
-            onChange={handleChangeFilterQuery}
+            onChange={(e) => setQuery(e.target.value)}
             value={query ?? ''}
             disabled={isLoading}
           />

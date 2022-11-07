@@ -67,6 +67,11 @@ function App() {
     handleOpenErrorPopup();
   }
 
+  const searchErrorHandler = () => {
+    setIsApiError('Нужно ввести ключевое слово');
+    handleOpenErrorPopup()
+  }
+
   const handleChangeUserData = (name, email) => {
     return new Promise((resolve) => {
       mainApi.changeUserData(name, email)
@@ -98,12 +103,18 @@ function App() {
   const handleSignUp = ({name, email, password}) => {
     return new Promise((resolve) => {
       mainApi.signUp({name, email, password})
-      .then(res => {
-          setIsApiError('')
-          navigate('/signin', { push: true })
+      .then((res) => {
+        setIsApiError('')
+        mainApi.signIn({email, password})
+        .then((res) => {
+          setIsLogged(true)
+          setCurrentUser(res.data)
+          navigate('/movies', { push: true })
+        })
       })
       .catch((err) => {
-          setIsApiError(err)
+        console.log(err)
+          setIsApiError(err.statusText)
       })
       .finally(() => {
         resolve()
@@ -115,14 +126,14 @@ function App() {
     return new Promise((resolve) => {
       mainApi.signIn({email, password})
       .then((res) => {
+        if (res.data)
+        // console.log(res)
         setIsLogged(true)
         setCurrentUser(res.data)
-      })
-      .then(() => {
         navigate('/movies', { push: true })
       })
       .catch(err => {
-        setIsApiError(err)
+        setIsApiError(err.statusText)
       })
       .finally(() => {
         resolve()
@@ -263,8 +274,24 @@ function App() {
       if (filterCheckbox) {
         return filteredArray.filter(item => item.duration <= filterDuration);
       }
-    }
+    } 
     return filteredArray;
+  }
+
+  function handleFilterSavedMovieCards(cardsList, filterQuery, filterCheckbox) {
+    let filteredArray = [];
+    let filterDuration = 40;
+    if (filterQuery) {
+      filteredArray = cardsList.filter(item => item.nameRU.toLowerCase().includes(filterQuery.toLowerCase()));
+      if (filterCheckbox) {
+        return filteredArray.filter(item => item.duration <= filterDuration);
+      }
+      return filteredArray
+    }
+    if (filterCheckbox) {
+      return cardsList.filter(item => item.duration <= filterDuration);
+    }
+    return cardsList.filter(item => item.duration >= filterDuration);
   }
 
   function handleLoadingPartialCards(arrayCardsForLoad, cardsMustBeLoaded) {
@@ -333,6 +360,7 @@ function App() {
                 savedMoviesList={savedMoviesList}
                 initialAmountCards={initialAmountCards}
                 amountCardsForLoad={amountCardsForLoad}
+                searchErrorHandler={searchErrorHandler}
               />
             </ProtectedRoute>
           } />
@@ -342,7 +370,7 @@ function App() {
                 handleOpenBurgerMenu={handleOpenBurgerMenu}
                 onMovieRemove={handleRemoveMovieFromSavedList}
                 onChangeWindowWidth={handleChangeAmountOfCardVisible}
-                onFilterMovieCards={handleFilterMovieCards}
+                onFilterMovieCards={handleFilterSavedMovieCards}
                 onLoadingPartialCards={handleLoadingPartialCards}
                 onChangeButtonVisible={handleChangeMoreButtonVisible}
                 loadMoreMoviesButtonVisible={loadMoreMoviesButtonVisible}
@@ -352,6 +380,7 @@ function App() {
                 onSavedMovieRemove={handleSavedMovieRemove}
                 initialAmountCards={initialAmountCards}
                 amountCardsForLoad={amountCardsForLoad}
+                searchErrorHandler={searchErrorHandler}
               />
             </ProtectedRoute>
           } />

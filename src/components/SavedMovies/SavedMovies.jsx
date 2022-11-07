@@ -21,9 +21,9 @@ const SavedMovies = ({
   onSavedMovieRemove,
   getSavedMoviesFromMoviesApi,
   apiErrorMessage,
-
   initialAmountCards,
-  amountCardsForLoad
+  amountCardsForLoad,
+  searchErrorHandler
 }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [savedShortMovieCheckbox, setSavedShortMovieCheckbox] = useLocalStorage(false, 'SavedShortMovieCheckbox');
@@ -36,8 +36,12 @@ const SavedMovies = ({
 
   const handleFilterQueryChange = (query) => {
     setSavedMoviesFilterQuery(query);
-    if (!savedMoviesFilterQuery && savedMoviesList.length === 0) {
-      getSavedMoviesFromMoviesApi();
+    if (query === '') {
+      searchErrorHandler()
+    } else {
+      if (!savedMoviesFilterQuery && savedMoviesList.length === 0) {
+        getSavedMoviesFromMoviesApi();
+      }
     }
   }
 
@@ -55,6 +59,8 @@ const SavedMovies = ({
 
   React.useEffect (() => {
     if(filteredSavedMovies.length !== 0) {
+      setSavedShortMovieCheckbox(false)
+      setSavedMoviesFilterQuery('')
       getSavedMoviesFromMoviesApi();
     } else {
       setIsLoading(false);
@@ -63,7 +69,7 @@ const SavedMovies = ({
 
   React.useEffect(() => {
     if (savedMoviesList.length > 0) {
-      setFilteredSavedMovies( onFilterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
+      setFilteredSavedMovies( savedMoviesList );
     } else {
       setMoviesNotFoundMessage(movieNotFoundMessage);
       setMoviesMessageVisible(true);
@@ -75,12 +81,11 @@ const SavedMovies = ({
     if (savedMoviesFilterQuery !== '') {
       setFilteredSavedMovies( onFilterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
     }
+      
   }, [savedMoviesFilterQuery]);
 
   React.useEffect(() => {
-    if (savedMoviesFilterQuery !== '') {
       setFilteredSavedMovies( onFilterMovieCards(savedMoviesList, savedMoviesFilterQuery, savedShortMovieCheckbox) );
-    }
   }, [savedShortMovieCheckbox]);
 
   React.useEffect(() => {

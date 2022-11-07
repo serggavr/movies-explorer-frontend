@@ -14,9 +14,9 @@ const FilterCheckbox = ({
         <input 
           type='checkbox' 
           className='filter-checkbox__toggle'
-          defaultChecked={shortMovieCheckboxChecked}
           onChange={() => onMovieCheckboxChange(!shortMovieCheckboxChecked)}
           disabled={isLoading}
+          checked={shortMovieCheckboxChecked}
         />
         <span className={`filter-checkbox__toggle-slider ${isLoading ? `filter-checkbox__toggle-slider_disabled` : ''}`}></span>
       </label>
