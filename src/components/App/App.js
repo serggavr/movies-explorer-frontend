@@ -79,7 +79,7 @@ function App() {
       setIsApiMessage('Пользователь с таким email уже зарегистрирован');
     }
     if (err.status === 401) { // UnauthorizedError
-      setIsApiMessage('Нет доступа');
+      setIsApiMessage('Не правильный email или пароль');
     }
     if (err.status === 500) { // ServerError
       setIsApiMessage('Ошибка сервера');
@@ -141,8 +141,7 @@ function App() {
         })
       })
       .catch((err) => {
-        console.log(err)
-          apiErrorMessageHandler(err)
+        apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
@@ -161,7 +160,7 @@ function App() {
         navigate('/movies', { push: true })
       })
       .catch(err => {
-        setIsApiError(err.statusText)
+        apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
@@ -417,7 +416,6 @@ function App() {
               <Profile 
                 handleOpenBurgerMenu={handleOpenBurgerMenu}
                 onChangeUserData={handleChangeUserData}
-                // onApiError={isApiErrorMessage}
                 onLogout={handleLogout}
                 infoMessageHandler={infoMessageHandler}
                 isApiErrorMessage={isApiErrorMessage}

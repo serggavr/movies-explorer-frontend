@@ -8,7 +8,8 @@ import { useCustomInputValidation } from '../../hooks/useCustomInputValidation';
 
 const Login = ({
   onSignIn,
-  onApiError
+  onApiError,
+  isApiErrorMessage
 }) => {
   const [formValid, setFormValid] = React.useState(false)
   const [submitButtonText, setSubmitButtonText] = React.useState("Войти")
@@ -21,11 +22,17 @@ const Login = ({
   const { validationMessage: passwordErrorMessage, isValid: passwordValid, onChange: validatePassword, resetError: resetPasswordError } = useCustomInputValidation({})
 
   function changeEmail(e) {
+    if (apiErrorMessage) {
+      setApiErrorMessage('')
+    }
     setEmail(e.target.value);
     validateEmail(e)
   }
 
   function changePassword(e) {
+    if (apiErrorMessage) {
+      setApiErrorMessage('')
+    }
     setPassword(e.target.value);
     validatePassword(e)
   }
@@ -44,32 +51,16 @@ const Login = ({
   }
 
   React.useEffect(() => {
-    if (apiErrorMessage) {
-      setApiErrorMessage('')
-    }
     emailValid && email !== '' && passwordValid && password !== '' ? setFormValid(false) : setFormValid(true);
-    apiErrorMessage ?? setApiErrorMessage('')
   }, [emailValid, passwordValid, email, password])
 
   React.useEffect(() => {
-    if (onApiError) {
-      if (onApiError.message === 'Failed to fetch') {
-        setApiErrorMessage('Что-то пошло не так...')
-      }
-      if (onApiError.status === 409) {
-        setApiErrorMessage('Пользователь с таким email уже зарегистрирован')
-      }
-      if (onApiError.status && onApiError.status !== 409) {
-        setApiErrorMessage(onApiError.statusText)
-      }
-    }
-  }, [onApiError])
+    setApiErrorMessage(isApiErrorMessage)
+  }, [isApiErrorMessage])
 
   React.useEffect(() => {
     setApiErrorMessage('')
   }, [])
-
-
 
   return (
     <PageWithForm

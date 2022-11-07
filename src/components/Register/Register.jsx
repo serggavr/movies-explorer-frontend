@@ -8,7 +8,6 @@ import { useCustomInputValidation } from '../../hooks/useCustomInputValidation';
 
 const Register = ({
   onSignUp,
-  onApiError,
   isApiErrorMessage
 }) => {
   const [formValid, setFormValid] = React.useState(false)
@@ -65,22 +64,9 @@ const Register = ({
   }
 
   React.useEffect(() => {
-    // if (apiErrorMessage) {
-    //   setApiErrorMessage('')
-    // }
       nameValid && name !== '' && emailValid && email !== '' && passwordValid && password !== '' ? setFormValid(false) : setFormValid(true);
-      // apiErrorMessage ?? setApiErrorMessage('')
   }, [nameValid, emailValid, passwordValid, name, email, password])
 
-  // React.useEffect(() => {
-  //   if (onApiError) {
-  //     if (onApiError === "Conflict") {
-  //       setApiErrorMessage('Пользователь с таким email уже зарегистрирован')
-  //     } else {
-  //       setApiErrorMessage('Что-то пошло не так..')
-  //     }
-  //   }
-  // }, [onApiError])
   React.useEffect(() => {
     setApiErrorMessage(isApiErrorMessage)
   }, [isApiErrorMessage])
