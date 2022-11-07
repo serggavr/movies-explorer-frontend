@@ -170,12 +170,7 @@ function App() {
         navigate('/movies', { push: true })
       })
       .catch(err => {
-        if (err.status === 401) {
-          handleLogout()
-        } else {
-          apiErrorMessageHandler(err)
-        }
-        // apiErrorMessageHandler(err)
+        apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
