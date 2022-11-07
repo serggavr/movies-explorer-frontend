@@ -23,7 +23,7 @@ const SavedMovies = ({
   apiErrorMessage,
   initialAmountCards,
   amountCardsForLoad,
-  searchErrorHandler
+  infoMessageHandler
 }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [savedShortMovieCheckbox, setSavedShortMovieCheckbox] = useLocalStorage(false, 'SavedShortMovieCheckbox');
@@ -37,7 +37,7 @@ const SavedMovies = ({
   const handleFilterQueryChange = (query) => {
     setSavedMoviesFilterQuery(query);
     if (query === '') {
-      searchErrorHandler()
+      infoMessageHandler('Нужно ввести ключевое слово')
     } else {
       if (!savedMoviesFilterQuery && savedMoviesList.length === 0) {
         getSavedMoviesFromMoviesApi();

@@ -12,8 +12,9 @@ import { useCustomInputValidation } from '../../hooks/useCustomInputValidation';
 const Profile = ({
   handleOpenBurgerMenu,
   onChangeUserData,
+  onLogout,
   onApiError,
-  onLogout
+  isApiErrorMessage
 }) => {
   const currentUser = React.useContext(CurrentUserContext);
   const [formValid, setFormValid] = React.useState(false)
@@ -26,11 +27,17 @@ const Profile = ({
   const {validationMessage: emailErrorMessage, isValid: emailValid, onChange: validateEmail , resetError: resetEmailError} = useCustomInputValidation({})
 
   function handleChangeName(e) {
+    if (apiErrorMessage) {
+      setApiErrorMessage('')
+    }
     setNewName(e.target.value);
     validateName(e)
   }
 
   function handleChangeEmail(e) {
+    if (apiErrorMessage) {
+      setApiErrorMessage('')
+    }
     setNewEmail(e.target.value);
     validateEmail(e)
   }
@@ -38,10 +45,9 @@ const Profile = ({
   const handleSubmit = (e) => {
     e.preventDefault()
     setSubmitButtonText('Сохранение...')
-    onChangeUserData(newName, newEmail)
+    onChangeUserData(newName === '' ? currentUser.name : newName, newEmail === '' ? currentUser.email : newEmail)
     .finally(() => {
       setSubmitButtonText('Редактировать')
-      setApiErrorMessage('')
       setNewName('')
       setNewEmail('')
     })
@@ -60,30 +66,14 @@ const Profile = ({
   }
 
   React.useEffect(() => {
-    if (apiErrorMessage) {
-      setApiErrorMessage('')
-    }
-      nameValid && newName !== '' && emailValid && newEmail !== '' && !(newName === currentUser.name && newEmail === currentUser.email) ? setFormValid(false) : setFormValid(true);
-      apiErrorMessage ?? setApiErrorMessage('');
-  }, [nameValid, emailValid, newName, newEmail, handleFocusNewNameInput, handleFocusNewEmailInput])
+    nameValid && emailValid && (newName !== '' || newEmail !== '') ? setFormValid(true) : setFormValid(false);
+  }, [nameValid, emailValid, newName, newEmail])
 
   React.useEffect(() => {
-    if (onApiError) {
-      if (onApiError.message === 'Failed to fetch') {
-        setApiErrorMessage('Что-то пошло не так...')
-      }
-      if (onApiError.status === 409) {
-        setApiErrorMessage('Пользователь с таким email уже зарегистрирован')
-      }
-      if (onApiError.status && onApiError.status !== 409) {
-        setApiErrorMessage(onApiError.statusText)
-      }
-    }
-  }, [onApiError])
+    setApiErrorMessage(isApiErrorMessage)
+  }, [isApiErrorMessage])
 
   React.useEffect(() => {
-    // setNewName(currentUser.name)
-    // setNewEmail(currentUser.email)
     setApiErrorMessage('')
   }, [])
   
@@ -93,14 +83,9 @@ const Profile = ({
       <Header loggedIn={true} theme='dark' handleOpenBurgerMenu={handleOpenBurgerMenu} />
       <Section theme='dark' sectionName='profile'>
         <h1 className='profile__greetings'>Привет, {currentUser.name}!</h1>
-        {/* <form 
-          action='#'
-          className='profile__form'
-          name='profile'
-          onSubmit={handleSubmit}
-        > */}
+
           <AuthForm
-            isFormValid={formValid}
+            isFormValid={!formValid}
             submitButtonText={submitButtonText}
             onSubmit={handleSubmit}
             submitButtonClassName='button_placed_profile'
@@ -112,7 +97,6 @@ const Profile = ({
               inputName='Имя'
               classNameType='name'
               classNamePlaced='profile'
-              // inputPlaceholder=''
               inputPlaceholder={currentUser.name}
               inputType='text'
               required={true}
@@ -125,7 +109,6 @@ const Profile = ({
               inputName='E-mail'
               classNameType='email'
               classNamePlaced='profile'
-              // inputPlaceholder=''
               inputPlaceholder={currentUser.email}
               inputType='email'
               required={true}
@@ -138,6 +121,10 @@ const Profile = ({
               inputWithErrorName='Ошибка'
               errorMessage={apiErrorMessage}
             />}
+            {/* {isApiErrorMessage && <FormErrorMessage
+              inputWithErrorName='Ошибка'
+              errorMessage={isApiErrorMessage}
+            />} */}
             {nameErrorMessage && <FormErrorMessage
               inputWithErrorName='Имя'
               errorMessage={nameErrorMessage}
@@ -148,8 +135,6 @@ const Profile = ({
             />}
             
           </div>
-          {/* <input type='submit' className='profile__button profile__button_type_edit' value={submitButtonText} /> */}
-        {/* </form> */}
         </AuthForm>
         <button 
           className='profile__button profile__button_type_logout'

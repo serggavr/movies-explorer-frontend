@@ -30,6 +30,7 @@ function App() {
   const [isErrorPopupOpen , setIsErrorPopupOpen] = React.useState(false);
   const [apiErrorMessage, setApiErrorMessage] = React.useState('');
   const [isApiError, setIsApiError] = React.useState('');
+  const [isApiErrorMessage, setIsApiMessage] = React.useState('');
 
   const [isLogged, setIsLogged] = useLocalStorage(false, 'isLogged');
   const [currentUser, setCurrentUser] = useLocalStorage('', 'currentUser');
@@ -50,7 +51,7 @@ function App() {
       setIsApiError('ForbiddenError');
     }
     if (err.status === 409) { // ConflictError
-      setIsApiError('ConflictError');
+      setIsApiError('Пользователь с таким email уже зарегистрирован');
     }
     if (err.status === 401) { // UnauthorizedError
       setIsApiError('Нет доступа');
@@ -67,19 +68,49 @@ function App() {
     handleOpenErrorPopup();
   }
 
-  const searchErrorHandler = () => {
-    setIsApiError('Нужно ввести ключевое слово');
+  const apiErrorMessageHandler = (err) => {
+    if (err.status === 400) { // CastError
+      setIsApiMessage('CastError');
+    }
+    if (err.status === 403) { // ForbiddenError
+      setIsApiMessage('ForbiddenError');
+    }
+    if (err.status === 409) { // ConflictError
+      setIsApiMessage('Пользователь с таким email уже зарегистрирован');
+    }
+    if (err.status === 401) { // UnauthorizedError
+      setIsApiMessage('Нет доступа');
+    }
+    if (err.status === 500) { // ServerError
+      setIsApiMessage('Ошибка сервера');
+    }
+    if (err.status === 404) { // NotFoundError
+      setIsApiMessage('Не найдено');
+    }
+    if (!err.status) { 
+      setIsApiMessage('Ошибка сервера'); // Filed to Fetch
+    }
+    // handleOpenErrorPopup();
+  }
+
+  const infoMessageHandler = (message) => {
+    setIsApiError(message);
     handleOpenErrorPopup()
   }
 
   const handleChangeUserData = (name, email) => {
+    setIsApiMessage('')
     return new Promise((resolve) => {
       mainApi.changeUserData(name, email)
       .then(user => {
         setCurrentUser(user)
+        infoMessageHandler('Профиль обновлен')
+        // setIsApiError('')
       })
       .catch((err) => {
-        apiErrorHandler(err)
+        // apiErrorHandler(err)
+        // setIsApiError(err.status)
+        apiErrorMessageHandler(err)
       })
       .finally(() => {
         resolve()
@@ -127,7 +158,6 @@ function App() {
       mainApi.signIn({email, password})
       .then((res) => {
         if (res.data)
-        // console.log(res)
         setIsLogged(true)
         setCurrentUser(res.data)
         navigate('/movies', { push: true })
@@ -360,7 +390,7 @@ function App() {
                 savedMoviesList={savedMoviesList}
                 initialAmountCards={initialAmountCards}
                 amountCardsForLoad={amountCardsForLoad}
-                searchErrorHandler={searchErrorHandler}
+                infoMessageHandler={infoMessageHandler}
               />
             </ProtectedRoute>
           } />
@@ -380,7 +410,7 @@ function App() {
                 onSavedMovieRemove={handleSavedMovieRemove}
                 initialAmountCards={initialAmountCards}
                 amountCardsForLoad={amountCardsForLoad}
-                searchErrorHandler={searchErrorHandler}
+                infoMessageHandler={infoMessageHandler}
               />
             </ProtectedRoute>
           } />
@@ -389,8 +419,10 @@ function App() {
               <Profile 
                 handleOpenBurgerMenu={handleOpenBurgerMenu}
                 onChangeUserData={handleChangeUserData}
-                onApiError={isApiError}
+                // onApiError={isApiErrorMessage}
                 onLogout={handleLogout}
+                infoMessageHandler={infoMessageHandler}
+                isApiErrorMessage={isApiErrorMessage}
               />
             </ProtectedRoute>
           } />

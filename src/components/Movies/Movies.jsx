@@ -27,7 +27,7 @@ const Movies = ({
   savedMoviesList,
   initialAmountCards,
   amountCardsForLoad,
-  searchErrorHandler
+  infoMessageHandler
 }) => {
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -51,7 +51,7 @@ const Movies = ({
       getMoviesFromMoviesApi();
     } 
     if (query === '') {
-      searchErrorHandler()
+      infoMessageHandler('Нужно ввести ключевое слово')
     }
   }
 
