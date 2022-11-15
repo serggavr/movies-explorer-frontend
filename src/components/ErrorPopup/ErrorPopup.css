@@ -1,0 +1,51 @@
+.error-popup {
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: visibility 0.5s, opacity 0.5s ease-in;
+}
+
+.error-popup_visible {
+  opacity: 1;
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.error-popup__container {
+  width: 400px;
+  background-color: #202020;
+  border-radius: 6px;
+}
+
+.error-popup__message {
+  margin: 20px;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  text-align: center;
+  color: #EE3465;
+}
+
+@media (max-width: 535px) {
+  .error-popup__container {
+    width: 260px;
+  }
+
+  .error-popup__message {
+    margin: 10px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

@@ -1,0 +1,118 @@
+
+.input {
+  width: 100%;
+}
+
+/* .input:focus-visible {
+  outline: 1px solid #8B8B8B;
+} */
+
+.input_placed_auth-form {
+  flex-direction: column;
+}
+
+.input_placed_auth-form:not(:first-of-type) {
+  margin-top: 20px;
+}
+
+.input_placed_profile {
+  flex-direction: row;
+}
+
+.input__label {
+  display: flex;
+}
+
+.input__label_placed_auth-form  {
+  align-self: flex-start;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+}
+
+.input__label_placed_profile {
+  height: 47px;
+  max-width: 410px;
+  box-sizing: border-box;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: #FFFFFF;
+  border-bottom: 1px solid #424242;
+}
+
+.input__label_placed_profile:last-of-type {
+  border: none;
+}
+
+.input__field_placed_auth-form {
+  margin-top: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #FFFFFF;
+  background: #2F2F2F;
+  border-radius: 8px;
+  border: 0;
+  outline: 0;
+}
+
+.input__field_placed_auth-form:focus-visible {
+  outline: 1px solid #8B8B8B;
+}
+
+.input__field_placed_auth-form:focus-visible.input__field_type_error {
+  outline: 1px solid #EE3465;
+}
+
+.input__field_placed_profile {
+  box-sizing: border-box;
+  width: calc(100% - 44px);
+  /* text-align: end; */
+  background-color: #202020;
+  border: none;
+  color: #FFFFFF;
+  outline: 0;
+}
+
+.input__field_placed_profile:focus-visible { 
+  outline: 1px solid #8B8B8B;
+}
+
+.input__field_placed_profile:focus-visible.input__field_type_error { 
+  outline: 1px solid #EE3465;
+}
+
+.input__field_placed_profile::placeholder {
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: right;
+  color: #FFFFFF;
+}
+
+.input__field_type_error {
+  color: #EE3465;
+  outline: 1px solid #EE3465;
+}
+
+/* .input__field_type_error {
+  outline: 1px solid #EE3465;
+} */
+

@@ -1,0 +1,25 @@
+.section {
+  background-color: #272727;
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
+.section_theme_dark {
+  background-color: #202020;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 90px 50px;
+  }
+}
+
+@media (max-width: 535px) {
+  .section {
+    padding: 0 18px;
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+}
+
+

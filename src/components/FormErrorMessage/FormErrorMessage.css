@@ -1,0 +1,15 @@
+.form-error-message {
+  display: none;
+  margin-top: 10px;
+  width: 100%;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+}
+
+.form-error-message_visible {
+  display: inline;
+}
